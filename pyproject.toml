@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "nlp-cw-01"
+version = "0.1.0"
+description = ""
+authors = ["Eric Janto <e.janto@gmx.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+tqdm = "4.40.2"
+numpy = "1.18.5"
+gensim = "3.8.0"
+pandas = "0.25.3"
+seaborn = "0.9.0"
+matplotlib = "3.1.1"
+torch = [
+    { url = "https://download.pytorch.org/whl/cpu/torch-1.3.1-cp37-none-macosx_10_7_x86_64.whl#sha256=134e8291a97151b1ffeea09cb9ddde5238beb4e6d9dfb66657143d6990bfb865", markers = "sys_platform == 'darwin'" },
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
