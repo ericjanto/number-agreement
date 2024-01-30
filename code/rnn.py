@@ -97,10 +97,10 @@ class RNN(Model):
 			x_onehot = make_onehot(x[t], self.vocab_size)
 			d_onehot = make_onehot(d[t], self.vocab_size)
 
-			g_der = np.ones(len(g_net_out)) # TODO: this is probably wrong
-			f_der = np.multiply(s[t], (np.ones(len(s[t]) - s[t])))
-
 			g_net_out = y[t]
+			g_der = np.ones(len(g_net_out))
+			f_der = grad(s[t])
+
 
 			delta_out = np.multiply(d_onehot - y[t], g_der)
 			delta_in = np.multiply(np.dot(self.W.T, delta_out), f_der)
@@ -154,13 +154,12 @@ class RNN(Model):
 			##########################
 			# --- your code here --- #
 			##########################
-			x_onehot = make_onehot(x[t], self.vocab_size)
+			x_onehot = make_onehot(x[t-steps], self.vocab_size)
 			d_onehot = make_onehot(d[t], self.vocab_size)
 
-			g_der = np.ones(len(g_net_out)) # TODO: this is probably wrong
-			f_der = np.multiply(s[t], (np.ones(len(s[t]) - s[t])))
-
 			g_net_out = y[t]
+			g_der = np.ones(len(g_net_out))
+			f_der = grad(s[t])
 
 			delta_out = np.multiply(d_onehot - y[t], g_der)
 			delta_in = np.multiply(np.dot(self.W.T, delta_out), f_der)
@@ -168,13 +167,15 @@ class RNN(Model):
 			self.deltaW += np.outer(delta_out, s[t])
 
 			delta_in_t_minus_steps = delta_in
-			# TODO: double check t-steps >= 0
-			f_der_t_minus_steps = np.multiply(s[t-steps], (np.ones(len(s[t-steps]) - s[t-steps])))
-			for i in range(steps):
+			
+			steps = min(steps, t)
+			f_der_t_minus_steps = grad(s[t-steps])
+
+			for _ in range(steps):
 				delta_in_t_minus_steps = np.multiply(np.dot(self.U.T, delta_in_t_minus_steps), f_der_t_minus_steps)
 
-			self.deltaV += np.multiply(delta_in_t_minus_steps, x[t-steps])
-			self.deltaU += np.multiply(delta_in_t_minus_steps, s[t-steps-1])
+			self.deltaV += np.outer(delta_in_t_minus_steps, x_onehot)
+			self.deltaU += np.outer(delta_in_t_minus_steps, s[t-steps-1])
 
 
 
