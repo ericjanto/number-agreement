@@ -154,6 +154,25 @@ class RNN(Model):
 			##########################
 			# --- your code here --- #
 			##########################
+			x_onehot = make_onehot(x[t], self.vocab_size)
+			d_onehot = make_onehot(d[t], self.vocab_size)
+
+			g_der = np.ones(len(g_net_out)) # TODO: this is probably wrong
+			f_der = np.multiply(s[t+1], (np.ones(len(s[t+1]) - s[t+1])))
+
+			g_net_out = y[t]
+			
+			delta_out = np.multiply(d_onehot - y[t], g_der)
+			delta_in = np.multiply(np.dot(self.W.T, delta_out), f_der)
+
+			self.deltaW += np.outer(delta_out, s[t+1])
+
+			delta_in_t_minus_steps = delta_in
+			# TODO: double check t-steps >= 0
+			f_der_t_minus_steps = np.multiply(s[t-steps+1], (np.ones(len(s[t-steps+1]) - s[t-steps+1])))
+			for i in range(steps):
+				delta_in_t_minus_steps = np.multiply(np.dot(self.U.T, delta_in_t_minus_steps), f_der)
+
 
 
 	def acc_deltas_bptt_np(self, x, d, y, s, steps):
