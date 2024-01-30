@@ -64,7 +64,8 @@ class RNN(Model):
 			# --- your code here --- #
 			##########################
 			# At each timestep, calculate the hidden input vectors:
-			net_in_t = np.dot(self.V, make_onehot(x[t], self.vocab_size)) + np.dot(self.U, s[t])
+			x_onehot = make_onehot(x[t], self.vocab_size)
+			net_in_t = np.dot(self.V, x_onehot) + np.dot(self.U, s[t])
 			s[t+1] = sigmoid(net_in_t)
 			# and the output vectors:
 			net_out_t = np.dot(self.W, s[t+1])
