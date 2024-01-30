@@ -169,12 +169,12 @@ class RNN(Model):
 
 			delta_in_t_minus_steps = delta_in
 			# TODO: double check t-steps >= 0
-			f_der_t_minus_steps = np.multiply(s[t-steps+1], (np.ones(len(s[t-steps+1]) - s[t-steps+1])))
+			f_der_t_minus_steps = np.multiply(s[t-steps], (np.ones(len(s[t-steps]) - s[t-steps])))
 			for i in range(steps):
 				delta_in_t_minus_steps = np.multiply(np.dot(self.U.T, delta_in_t_minus_steps), f_der_t_minus_steps)
 
 			self.deltaV += np.multiply(delta_in_t_minus_steps, x[t-steps])
-			self.deltaU += np.multiply(delta_in_t_minus_steps, s[t-steps])
+			self.deltaU += np.multiply(delta_in_t_minus_steps, s[t-steps-1])
 
 
 
