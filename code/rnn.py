@@ -52,8 +52,7 @@ class RNN(Model):
 		y	matrix of probability vectors for each input word
 		s	matrix of hidden layers for each input word
 		
-		'''
-		
+		'''		
 		# matrix s for hidden states, y for output states, given input x.
 		# rows correspond to times t, i.e., input words
 		# s has one more row, since we need to look back even at time 0 (s(t=0-1) will just be [0. 0. ....] )
@@ -64,7 +63,12 @@ class RNN(Model):
 			##########################
 			# --- your code here --- #
 			##########################
-
+			# At each timestep, calculate the hidden input vectors:
+			net_in_t = np.dot(self.V, make_onehot(x[t], self.vocab_size)) + np.dot(self.U, s[t])
+			s[t+1] = sigmoid(net_in_t)
+			# and the output vectors:
+			net_out_t = np.dot(self.W, s[t+1])
+			y[t] = softmax(net_out_t)
 
 		return y, s
 	
@@ -89,6 +93,21 @@ class RNN(Model):
 			##########################
 			# --- your code here --- #
 			##########################
+			x_onehot = make_onehot(x[t], self.vocab_size)
+			d_onehot = make_onehot(d[t], self.vocab_size)
+
+			g_der = np.ones(len(g_net_out)) # TODO: this is probably wrong
+			f_der = np.multiply(s[t+1], (np.ones(len(s[t+1]) - s[t+1])))
+
+			g_net_out = y[t]
+			
+			delta_out = np.multiply(d_onehot - y[t], g_der)
+			delta_in = np.multiply(np.dot(self.W.T, delta_out), f_der)
+
+			self.deltaW += np.outer(delta_out, s[t+1])
+			self.deltaV += np.outer(delta_in, x_onehot)
+			self.deltaU += np.outer(delta_in, s[t])
+
 
 	def acc_deltas_np(self, x, d, y, s):
 		'''

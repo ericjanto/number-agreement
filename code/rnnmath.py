@@ -11,6 +11,7 @@ def grad(x):
 	return x*(1-x)
 
 def make_onehot(i, n):
+	# i = word index, n = vocab size
 	y = np.zeros(n)
 	y[i] = 1
 	return y

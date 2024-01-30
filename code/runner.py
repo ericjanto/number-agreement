@@ -1,4 +1,5 @@
 # coding: utf-8
+import numpy as np
 import sys
 import time
 
@@ -45,6 +46,12 @@ class Runner(object):
         ##########################
         # --- your code here --- #
         ##########################
+        y = self.model.predict(x)[0]
+
+        # 0 -> di = onehot(0)
+        # 4 -> xi = onehot(4)
+
+        loss = -np.sum(d * np.log(y))
 
         return loss
 
@@ -96,11 +103,17 @@ class Runner(object):
         '''
 
         mean_loss = 0.
-
         ##########################
         # --- your code here --- #
         ##########################
+        total_loss = 0.
+        total_num_words = 0
+        for i in range(len(X)):
+            total_loss = self.compute_loss(X[i], D[i])
+            total_num_words += len(X[i])
 
+        mean_loss = total_loss / total_loss
+    
         return mean_loss
 
     def train(self, X, D, X_dev, D_dev, epochs=10, learning_rate=0.5, anneal=5, back_steps=0, batch_size=100,
