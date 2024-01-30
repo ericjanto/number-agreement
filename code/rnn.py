@@ -154,6 +154,9 @@ class RNN(Model):
 			##########################
 			# --- your code here --- #
 			##########################
+			# probably a one-off error / mismatch of timesteps
+
+			steps = min(steps, t)
 			x_onehot = make_onehot(x[t-steps], self.vocab_size)
 			d_onehot = make_onehot(d[t], self.vocab_size)
 
@@ -167,11 +170,10 @@ class RNN(Model):
 			self.deltaW += np.outer(delta_out, s[t])
 
 			delta_in_t_minus_steps = delta_in
-			
-			steps = min(steps, t)
 			f_der_t_minus_steps = grad(s[t-steps])
 
-			for _ in range(steps):
+			for i in range(1, steps+1):
+				# (Junhua's weird idea) f_der_curr = grad(s[t-i])
 				delta_in_t_minus_steps = np.multiply(np.dot(self.U.T, delta_in_t_minus_steps), f_der_t_minus_steps)
 
 			self.deltaV += np.outer(delta_in_t_minus_steps, x_onehot)
