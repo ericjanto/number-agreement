@@ -55,20 +55,8 @@ class Runner(object):
 
         y = self.model.predict(x)[0]
 
-        for t in range(max(len(y), len(d))):
-            if len(y) < t:
-                oneHoty = np.zeros(self.model.vocab_size)
-            else:
-                oneHoty = y[t]
-
-            if len(d) < t:
-                oneHotd = np.zeros(self.model.vocab_size)
-            else:
-                oneHotd = make_onehot(d[t], self.model.vocab_size)
-
-            for j in range(len(oneHoty)):
-                loss -= oneHotd[j] * np.log(oneHoty[j])
-
+        loss = -np.sum(np.log(y[np.arange(len(d)), d]))
+        
         return loss
 
     def compute_loss_np(self, x, d):
