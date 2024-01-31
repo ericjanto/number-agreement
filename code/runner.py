@@ -1,7 +1,10 @@
 # coding: utf-8
+import csv
+import itertools
 import numpy as np
 import sys
 import time
+from tqdm import tqdm
 
 from utils import *
 from rnnmath import *
@@ -501,11 +504,94 @@ if __name__ == "__main__":
     data_folder = sys.argv[2]
     np.random.seed(2018)
 
+    if mode == "train-lm-rnn-parameter-search":
+        """
+        code for training language model.
+        change this to different values, or use it to get you started with your own testing class
+        """
+        train_size = 1000
+        dev_size = 1000
+        vocab_size = 2000
+        epochs = 1
+        log=True
+        batch_size = 100
+        min_change = 0.0001
+
+        # get the data set vocabulary
+        vocab = pd.read_table(
+            data_folder + "/vocab.wiki.txt",
+            header=None,
+            sep="\s+",
+            index_col=0,
+            names=["count", "freq"],
+        )
+        num_to_word = dict(enumerate(vocab.index[:vocab_size]))
+        word_to_num = invert_dict(num_to_word)
+
+        # calculate loss vocabulary words due to vocab_size
+        fraction_lost = fraq_loss(vocab, word_to_num, vocab_size)
+        print(
+            "Retained %d words from %d (%.02f%% of all tokens)\n"
+            % (vocab_size, len(vocab), 100 * (1 - fraction_lost))
+        )
+
+        docs = load_lm_dataset(data_folder + "/wiki-train.txt")
+        S_train = docs_to_indices(docs, word_to_num, 1, 1)
+        X_train, D_train = seqs_to_lmXY(S_train)
+
+        # Load the dev set (for tuning hyperparameters)
+        docs = load_lm_dataset(data_folder + "/wiki-dev.txt")
+        S_dev = docs_to_indices(docs, word_to_num, 1, 1)
+        X_dev, D_dev = seqs_to_lmXY(S_dev)
+
+        X_train = X_train[:train_size]
+        D_train = D_train[:train_size]
+        X_dev = X_dev[:dev_size]
+        D_dev = D_dev[:dev_size]
+
+        # q = best unigram frequency from omitted vocab
+        # this is the best expected loss out of that set
+        q = vocab.freq[vocab_size] / sum(vocab.freq[vocab_size:])
+
+        ##########################
+        # --- your code here --- #
+        ##########################
+        hdims = [25,50]
+        lrs = [0.1,0.5]
+        back_steps = [0,2,5]
+
+        with open('finetuning.csv', 'w') as f:
+            writer = csv.writer(f)
+            f.write('hdim,lr,back_step,loss,loss_adjusted\n')
+
+            for hdim, lr, back_step in tqdm(itertools.product(hdims, lrs, back_steps)):
+                run_loss = -1
+                adjusted_loss = -1
+                rnn = RNN(vocab_size, hdim, vocab_size)
+                runner = Runner(rnn)
+                run_loss = runner.train(
+                    X_train,
+                    D_train,
+                    X_dev,
+                    D_dev,
+                    epochs=epochs,
+                    learning_rate=lr,
+                    anneal=0,
+                    back_steps=back_step,
+                    batch_size=batch_size,
+                    min_change=min_change,
+                    log=log,
+                )
+                adjusted_loss = adjust_loss(run_loss, fraction_lost, q)
+                print("Writing to file")
+                writer.writerow([hdim,lr,back_step,run_loss,adjusted_loss])
+
     if mode == "train-lm-rnn":
         """
         code for training language model.
         change this to different values, or use it to get you started with your own testing class
         """
+        tune_parameters = True
         train_size = 1000
         dev_size = 1000
         vocab_size = 2000
@@ -557,7 +643,6 @@ if __name__ == "__main__":
         ##########################
         # --- your code here --- #
         ##########################
-
         run_loss = -1
         adjusted_loss = -1
         rnn = RNN(vocab_size, hdim, vocab_size)
