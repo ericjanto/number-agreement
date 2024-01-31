@@ -512,7 +512,7 @@ if __name__ == "__main__":
         train_size = 1000
         dev_size = 1000
         vocab_size = 2000
-        epochs = 1
+        epochs = 10
         log=True
         batch_size = 100
         min_change = 0.0001
