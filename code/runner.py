@@ -1,6 +1,7 @@
 # coding: utf-8
 import csv
 import itertools
+import os
 import numpy as np
 import sys
 import time
@@ -570,7 +571,6 @@ if __name__ == "__main__":
                     log=log,
                 )
                 adjusted_loss = adjust_loss(run_loss, fraction_lost, q)
-                print("Writing to file")
                 writer.writerow([hdim,lr,back_step,run_loss,adjusted_loss])
 
     if mode == "train-lm-rnn":
@@ -578,7 +578,11 @@ if __name__ == "__main__":
         code for training language model.
         change this to different values, or use it to get you started with your own testing class
         """
-        train_size = 1000
+        # ---
+        # Best hyperparameters:
+        # 25,0.5,5 (hdim,lr,lookback)
+        # ---
+        train_size = 25000
         dev_size = 1000
         vocab_size = 2000
         epochs = 10
@@ -646,7 +650,13 @@ if __name__ == "__main__":
             min_change=min_change,
             log=log,
         )
-        rnn.save_params()
+        
+        dir = 'matrices'
+
+        np.save(os.path.join(dir, 'rnn.U.npy'), rnn.U)
+        np.save(os.path.join(dir, 'rnn.V.npy'), rnn.V)
+        np.save(os.path.join(dir, 'rnn.W.npy'), rnn.W)
+
         adjusted_loss = adjust_loss(run_loss, fraction_lost, q)
 
         print("Unadjusted: %.03f" % np.exp(run_loss))
