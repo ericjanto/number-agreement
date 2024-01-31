@@ -4,7 +4,6 @@ import itertools
 import numpy as np
 import sys
 import time
-from tqdm import tqdm
 
 from utils import *
 from rnnmath import *
@@ -564,7 +563,7 @@ if __name__ == "__main__":
             writer = csv.writer(f)
             f.write('hdim,lr,back_step,loss,loss_adjusted\n')
 
-            for hdim, lr, back_step in tqdm(itertools.product(hdims, lrs, back_steps)):
+            for hdim, lr, back_step in itertools.product(hdims, lrs, back_steps):
                 run_loss = -1
                 adjusted_loss = -1
                 rnn = RNN(vocab_size, hdim, vocab_size)
