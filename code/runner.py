@@ -56,7 +56,7 @@ class Runner(object):
         y = self.model.predict(x)[0]
 
         loss = -np.sum(np.log(y[np.arange(len(d)), d]))
-        
+
         return loss
 
     def compute_loss_np(self, x, d):
@@ -578,7 +578,6 @@ if __name__ == "__main__":
         code for training language model.
         change this to different values, or use it to get you started with your own testing class
         """
-        tune_parameters = True
         train_size = 1000
         dev_size = 1000
         vocab_size = 2000
@@ -634,7 +633,7 @@ if __name__ == "__main__":
         adjusted_loss = -1
         rnn = RNN(vocab_size, hdim, vocab_size)
         runner = Runner(rnn)
-        best_loss = runner.train(
+        run_loss = runner.train(
             X_train,
             D_train,
             X_dev,
@@ -648,6 +647,7 @@ if __name__ == "__main__":
             log=log,
         )
         rnn.save_params()
+        adjusted_loss = adjust_loss(run_loss, fraction_lost, q)
 
         print("Unadjusted: %.03f" % np.exp(run_loss))
         print("Adjusted for missing vocab: %.03f" % np.exp(adjusted_loss))
