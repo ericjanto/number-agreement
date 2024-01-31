@@ -509,6 +509,10 @@ if __name__ == "__main__":
         train_size = 1000
         dev_size = 1000
         vocab_size = 2000
+        epochs = 10
+        log=True
+        batch_size = 100
+        min_change = 0.0001
 
         hdim = int(sys.argv[3])
         lookback = int(sys.argv[4])
@@ -556,6 +560,22 @@ if __name__ == "__main__":
 
         run_loss = -1
         adjusted_loss = -1
+        rnn = RNN(vocab_size, hdim, vocab_size)
+        runner = Runner(rnn)
+        best_loss = runner.train(
+            X_train,
+            D_train,
+            X_dev,
+            D_dev,
+            epochs=epochs,
+            learning_rate=lr,
+            anneal=0,
+            back_steps=lookback,
+            batch_size=batch_size,
+            min_change=min_change,
+            log=log,
+        )
+        rnn.save_params()
 
         print("Unadjusted: %.03f" % np.exp(run_loss))
         print("Adjusted for missing vocab: %.03f" % np.exp(adjusted_loss))
