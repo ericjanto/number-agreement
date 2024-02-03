@@ -49,7 +49,6 @@ class Runner(object):
         ##########################
         # --- your code here --- #
         ##########################
-        y = self.model.predict(x)[0]
 
         # 0 -> di = onehot(0)
         # 4 -> xi = onehot(4)
@@ -78,6 +77,10 @@ class Runner(object):
         # --- your code here --- #
         ##########################
 
+        y = self.model.predict(x)[0][-1]
+
+        loss = -np.log(y[d])
+
         return loss
 
     def compute_acc_np(self, x, d):
@@ -95,7 +98,9 @@ class Runner(object):
         # --- your code here --- #
         ##########################
 
-        return 0
+        y = self.model.predict(x)[0][-1]
+
+        return np.argmax(y) == d[0]
 
     def compute_mean_loss(self, X, D):
         """
@@ -650,7 +655,7 @@ if __name__ == "__main__":
             min_change=min_change,
             log=log,
         )
-        
+
         dir = 'matrices'
 
         np.save(os.path.join(dir, 'rnn.U.npy'), rnn.U)
