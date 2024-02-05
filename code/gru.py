@@ -80,6 +80,14 @@ class GRU(GRUAbstract):
         ##########################
         # --- your code here --- #
         ##########################
+        t = len(x) - 1
+        d_onehot = make_onehot(d[0], self.out_vocab_size)
+
+        g_net_out = y[t]
+        g_der = np.ones(len(g_net_out))
+
+        delta_output = np.multiply(d_onehot - y[t], g_der)
+
         self.backward(x, t, s, delta_output)
 
     def acc_deltas_bptt_np(self, x, d, y, s, steps):
@@ -105,4 +113,16 @@ class GRU(GRUAbstract):
         # --- your code here --- #
         ##########################
 
+        t = len(x) - 1
+        d_onehot = make_onehot(d[0], self.out_vocab_size)
+
+        g_net_out = y[t]
+        g_der = np.ones(len(g_net_out))
+
+        delta_output = np.multiply(d_onehot - y[t], g_der)
+
         self.backward(x, t, s, delta_output, steps)
+
+
+#TODO: not sure what they mean by
+#As for the RNN acc_deltas_np and acc_deltas_bptt_np should reflect the structure of the number prediction problem

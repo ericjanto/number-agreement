@@ -132,6 +132,21 @@ class RNN(Model):
         ##########################
         # --- your code here --- #
         ##########################
+        t = len(x) - 1
+        x_onehot = make_onehot(x[t], self.vocab_size)
+        d_onehot = make_onehot(d[0], self.out_vocab_size)
+
+        g_net_out = y[t]
+        g_der = np.ones(len(g_net_out))
+        f_der = grad(s[t])
+
+        delta_out = np.multiply(d_onehot - y[t], g_der)
+        delta_in = np.multiply(np.dot(self.W.T, delta_out), f_der)
+
+        self.deltaW += np.outer(delta_out, s[t])
+        self.deltaV += np.outer(delta_in, x_onehot)
+        self.deltaU += np.outer(delta_in, s[t - 1])
+
 
     def acc_deltas_bptt(self, x, d, y, s, steps):
         """
@@ -205,3 +220,36 @@ class RNN(Model):
         ##########################
         # --- your code here --- #
         ##########################
+
+        t = len(x) - 1
+
+        g = y[t]
+        g_der = np.ones(len(g))
+        f_der = grad(s[t])
+
+        d_onehot = make_onehot(d[0], self.vocab_size)
+        delta_out = np.multiply(d_onehot - y[t], g_der)
+        self.deltaW += np.outer(delta_out, s[t])
+
+        delta_in = np.multiply(np.dot(self.W.T, delta_out), f_der)
+        delta_in_t_minus_steps = delta_in
+
+        # Apply delta_t
+        self.deltaV += np.outer(delta_in, make_onehot(x[t], self.vocab_size))
+        self.deltaU += np.outer(delta_in_t_minus_steps, s[t - 1])
+
+        # Apply all previous deltas
+        steps = min(steps, t)
+        for i in range(1, steps + 1):
+            f_der_curr = grad(s[t - i])
+            delta_in_t_minus_steps = np.multiply(
+                np.dot(self.U.T, delta_in_t_minus_steps), f_der_curr
+            )
+
+            self.deltaV += np.outer(
+                delta_in_t_minus_steps, make_onehot(x[t - i], self.vocab_size)
+            )
+            self.deltaU += np.outer(delta_in_t_minus_steps, s[t - i - 1])
+
+
+
