@@ -506,7 +506,7 @@ if __name__ == "__main__":
         dev_size = 1000
         vocab_size = 2000
         epochs = 10
-        log=True
+        log = True
         batch_size = 100
         min_change = 0.0001
 
@@ -549,13 +549,13 @@ if __name__ == "__main__":
         ##########################
         # --- your code here --- #
         ##########################
-        hdims = [25,50]
-        lrs = [0.1,0.5]
-        back_steps = [0,2,5]
+        hdims = [25, 50]
+        lrs = [0.1, 0.5]
+        back_steps = [0, 2, 5]
 
-        with open('finetuning.csv', 'w') as f:
+        with open("finetuning.csv", "w") as f:
             writer = csv.writer(f)
-            f.write('hdim,lr,back_step,loss,loss_adjusted\n')
+            f.write("hdim,lr,back_step,loss,loss_adjusted\n")
 
             for hdim, lr, back_step in itertools.product(hdims, lrs, back_steps):
                 run_loss = -1
@@ -576,7 +576,7 @@ if __name__ == "__main__":
                     log=log,
                 )
                 adjusted_loss = adjust_loss(run_loss, fraction_lost, q)
-                writer.writerow([hdim,lr,back_step,run_loss,adjusted_loss])
+                writer.writerow([hdim, lr, back_step, run_loss, adjusted_loss])
 
     if mode == "train-lm-rnn":
         """
@@ -591,11 +591,11 @@ if __name__ == "__main__":
         dev_size = 1000
         vocab_size = 2000
         epochs = 10
-        log=True
+        log = True
         batch_size = 100
         min_change = 0.0001
 
-        hdim = int(sys.argv[3])
+        hdims = int(sys.argv[3])
         lookback = int(sys.argv[4])
         lr = float(sys.argv[5])
 
@@ -658,11 +658,11 @@ if __name__ == "__main__":
             log=log,
         )
 
-        dir = 'matrices'
+        dir = "matrices"
 
-        np.save(os.path.join(dir, 'rnn.U.npy'), rnn.U)
-        np.save(os.path.join(dir, 'rnn.V.npy'), rnn.V)
-        np.save(os.path.join(dir, 'rnn.W.npy'), rnn.W)
+        np.save(os.path.join(dir, "rnn.U.npy"), rnn.U)
+        np.save(os.path.join(dir, "rnn.V.npy"), rnn.V)
+        np.save(os.path.join(dir, "rnn.W.npy"), rnn.W)
 
         adjusted_loss = adjust_loss(run_loss, fraction_lost, q)
 
@@ -674,13 +674,17 @@ if __name__ == "__main__":
         starter code for parameter estimation.
         change this to different values, or use it to get you started with your own testing class
         """
-        train_size = 1000
+        train_size = 10000
         dev_size = 1000
         vocab_size = 2000
+        epochs = 10
+        log = True
+        batch_size = 100
+        min_change = 0.0001
+        lookback = 0
 
-        hdim = int(sys.argv[3])
-        lookback = int(sys.argv[4])
-        lr = float(sys.argv[5])
+        hdims = [10, 25, 50]
+        lr = 0.5
 
         # get the data set vocabulary
         vocab = pd.read_table(
@@ -720,33 +724,34 @@ if __name__ == "__main__":
         # --- your code here --- #
         ##########################
 
-        acc = 0.0
+        for hdim in hdims:
+            acc = 0.0
 
-        rnn = RNN(vocab_size, hdim, 2)
-        runner = Runner(rnn)
-        rnn_loss = runner.train_np(
-            X_train,
-            Y_train,
-            X_dev,
-            D_dev,
-            epochs = epochs,
-            learning_rate = lr,
-            anneal = 0,
-            back_steps = lookback,
-            batch_size = batch_size,
-            min_change = min_change,
-            log = log
-        )
+            rnn = RNN(vocab_size, hdim, 2)
+            runner = Runner(rnn)
+            rnn_loss = runner.train_np(
+                X_train,
+                Y_train,
+                X_dev,
+                D_dev,
+                epochs=epochs,
+                learning_rate=lr,
+                anneal=0,
+                back_steps=lookback,
+                batch_size=batch_size,
+                min_change=min_change,
+                log=log,
+            )
 
-        dir = 'matrices'
+            dir = "matrices"
 
-        np.save(os.path.join(dir, 'rnn_np.U.npy'), rnn.U)
-        np.save(os.path.join(dir, 'rnn_np.V.npy'), rnn.V)
-        np.save(os.path.join(dir, 'rnn_np.W.npy'), rnn.W)
+            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.U.npy"), rnn.U)
+            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.V.npy"), rnn.V)
+            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.W.npy"), rnn.W)
 
-        acc = runner.compute_acc_np(X_dev, D_dev)
+            acc = runner.compute_acc_np(X_dev, D_dev)
 
-        print("Accuracy: %.03f" % acc)
+            print(f"Accuracy {hdim}: %.03f" % acc)
 
     if mode == "train-np-gru":
         """
@@ -756,10 +761,14 @@ if __name__ == "__main__":
         train_size = 10000
         dev_size = 1000
         vocab_size = 2000
+        epochs = 10
+        log = True
+        batch_size = 100
+        min_change = 0.0001
+        lookback = 0
 
-        hdim = int(sys.argv[3])
-        lookback = int(sys.argv[4])
-        lr = float(sys.argv[5])
+        hdims = [10, 25, 50]
+        lr = 0.5
 
         # get the data set vocabulary
         vocab = pd.read_table(
@@ -799,30 +808,31 @@ if __name__ == "__main__":
         # --- your code here --- #
         ##########################
 
-        acc = 0.0
+        for hdim in hdims:
+            acc = 0.0
 
-        gru = GRU(vocab_size, hdim, 2)
-        runner = Runner(gru)
-        gru_loss = runner.train_np(
-            X_train,
-            Y_train,
-            X_dev,
-            D_dev,
-            epochs = epochs,
-            learning_rate = lr,
-            anneal = 0,
-            back_steps = lookback,
-            batch_size = batch_size,
-            min_change = min_change,
-            log = log
-        )
+            gru = GRU(vocab_size, hdim, 2)
+            runner = Runner(gru)
+            gru_loss = runner.train_np(
+                X_train,
+                Y_train,
+                X_dev,
+                D_dev,
+                epochs=epochs,
+                learning_rate=lr,
+                anneal=0,
+                back_steps=lookback,
+                batch_size=batch_size,
+                min_change=min_change,
+                log=log,
+            )
 
-        dir = 'matrices'
+            dir = "matrices"
 
-        np.save(os.path.join(dir, 'gru_np.U.npy'), gru.U)
-        np.save(os.path.join(dir, 'gru_np.V.npy'), gru.V)
-        np.save(os.path.join(dir, 'gru_np.W.npy'), gru.W)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.U.npy"), gru.U)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.V.npy"), gru.V)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.W.npy"), gru.W)
 
-        acc = runner.compute_acc_np(X_dev, D_dev)
+            acc = runner.compute_acc_np(X_dev, D_dev)
 
-        print("Accuracy: %.03f" % acc)
+            print(f"Accuracy {hdim}: %.03f" % acc)
