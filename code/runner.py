@@ -638,8 +638,10 @@ if __name__ == "__main__":
         ##########################
         # --- your code here --- #
         ##########################
+
         run_loss = -1
         adjusted_loss = -1
+
         rnn = RNN(vocab_size, hdim, vocab_size)
         runner = Runner(rnn)
         run_loss = runner.train(
@@ -720,6 +722,30 @@ if __name__ == "__main__":
 
         acc = 0.0
 
+        rnn = RNN(vocab_size, hdim, 2)
+        runner = Runner(rnn)
+        rnn_loss = runner.train_np(
+            X_train,
+            Y_train,
+            X_dev,
+            D_dev,
+            epochs = epochs,
+            learning_rate = lr,
+            anneal = 0,
+            back_steps = lookback,
+            batch_size = batch_size,
+            min_change = min_change,
+            log = log
+        )
+
+        dir = 'matrices'
+
+        np.save(os.path.join(dir, 'rnn_np.U.npy'), rnn.U)
+        np.save(os.path.join(dir, 'rnn_np.V.npy'), rnn.V)
+        np.save(os.path.join(dir, 'rnn_np.W.npy'), rnn.W)
+
+        acc = runner.compute_acc_np(X_dev, D_dev)
+
         print("Accuracy: %.03f" % acc)
 
     if mode == "train-np-gru":
@@ -774,5 +800,29 @@ if __name__ == "__main__":
         ##########################
 
         acc = 0.0
+
+        gru = GRU(vocab_size, hdim, 2)
+        runner = Runner(gru)
+        gru_loss = runner.train_np(
+            X_train,
+            Y_train,
+            X_dev,
+            D_dev,
+            epochs = epochs,
+            learning_rate = lr,
+            anneal = 0,
+            back_steps = lookback,
+            batch_size = batch_size,
+            min_change = min_change,
+            log = log
+        )
+
+        dir = 'matrices'
+
+        np.save(os.path.join(dir, 'gru_np.U.npy'), gru.U)
+        np.save(os.path.join(dir, 'gru_np.V.npy'), gru.V)
+        np.save(os.path.join(dir, 'gru_np.W.npy'), gru.W)
+
+        acc = runner.compute_acc_np(X_dev, D_dev)
 
         print("Accuracy: %.03f" % acc)

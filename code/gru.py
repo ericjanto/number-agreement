@@ -122,7 +122,3 @@ class GRU(GRUAbstract):
         delta_output = np.multiply(d_onehot - y[t], g_der)
 
         self.backward(x, t, s, delta_output, steps)
-
-
-#TODO: not sure what they mean by
-#As for the RNN acc_deltas_np and acc_deltas_bptt_np should reflect the structure of the number prediction problem
