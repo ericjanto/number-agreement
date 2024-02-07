@@ -79,7 +79,7 @@ class Runner(object):
 
         y = self.model.predict(x)[0][-1]
 
-        loss = -np.log(y[d])
+        loss = -np.log(y[d[0]])
 
         return loss
 
@@ -749,7 +749,9 @@ if __name__ == "__main__":
             np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.V.npy"), rnn.V)
             np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.W.npy"), rnn.W)
 
-            acc = runner.compute_acc_np(X_dev, D_dev)
+            acc = sum(
+                [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            ) / len(X_dev)
 
             print(f"Accuracy {hdim}: %.03f" % acc)
 
@@ -829,10 +831,16 @@ if __name__ == "__main__":
 
             dir = "matrices"
 
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.U.npy"), gru.U)
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.V.npy"), gru.V)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Ur.npy"), gru.Ur)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vr.npy"), gru.Vr)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Uz.npy"), gru.Uz)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vz.npy"), gru.Vz)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Uh.npy"), gru.Uh)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vh.npy"), gru.Vh)
             np.save(os.path.join(dir, f"gru_np_hdim{hdim}.W.npy"), gru.W)
 
-            acc = runner.compute_acc_np(X_dev, D_dev)
+            acc = sum(
+                [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            ) / len(X_dev)
 
             print(f"Accuracy {hdim}: %.03f" % acc)
