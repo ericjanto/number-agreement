@@ -59,3 +59,22 @@ Interpreting the results, it is noticable that the adjusted loss improves with m
 Furthermore, it was noticable that a smaller learning rate did not result in better performance. This is likely due to the fact that the model was trained for a fixed number of epochs, and a smaller learning rate would require more epochs to converge to the minimum. This is supported by the fact that the best learning rate was the largest one, `{python} lr`. For infinite training time we would expect larger learning rates to perform worse, as they would likely overshoot the minimum more often.
 
 In terms of the number of hidden units, there is no clear pattern in the results. Normally, we would expect more hidden units to outperform the smaller number of hidden units. Our most viable explanation is that the training data was too small for the larger number of hidden dimensions to be beneficial, and the results would be different in this regard when trained on more data.
+
+## b) Best parameter model evaluation
+The best model was trained with the following hyperparameters: hidden units `{python} hdim`, learning rate `{python} lr`, and lookback steps `{python} lookback`. The model was trained for 10 epochs, and evaluated on the test set. The results are shown in @tbl-q2-b-best-model.
+
+```{python}
+# | echo: false
+# | tbl-cap: Results of the rnn on the test set, trained with the best hyperparameters from 2a).
+# | label: tbl-q2-b-best-model
+# Mean loss: 4.470
+# Unadjusted perplexity: 87.368
+# Adjusted perplexity: 118.628
+results = [4.470, 87.368, 118.628]
+md_tabulated = tabulate(
+    [results],
+    headers=["Mean loss", "Unadjusted perplexity", "Adjusted perplexity"],
+    tablefmt="pipe",
+)
+Markdown(md_tabulated)
+```

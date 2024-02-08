@@ -669,6 +669,65 @@ if __name__ == "__main__":
         print("Unadjusted: %.03f" % np.exp(run_loss))
         print("Adjusted for missing vocab: %.03f" % np.exp(adjusted_loss))
 
+    if mode == "evaluate-lm-rnn":
+        """
+        code for evaluating the rnn for q2b.
+        """
+        train_size = 25000
+        dev_size = 1000
+        vocab_size = 2000
+        epochs = 10
+        log = True
+        batch_size = 100
+        min_change = 0.0001
+        hdim = 25
+
+        # get the data set vocabulary
+        vocab = pd.read_table(
+            data_folder + "/vocab.wiki.txt",
+            header=None,
+            sep="\s+",
+            index_col=0,
+            names=["count", "freq"],
+        )
+        num_to_word = dict(enumerate(vocab.index[:vocab_size]))
+        word_to_num = invert_dict(num_to_word)
+
+        # calculate loss vocabulary words due to vocab_size
+        fraction_lost = fraq_loss(vocab, word_to_num, vocab_size)
+        print(
+            "Retained %d words from %d (%.02f%% of all tokens)\n"
+            % (vocab_size, len(vocab), 100 * (1 - fraction_lost))
+        )
+
+
+        # q = best unigram frequency from omitted vocab
+        # this is the best expected loss out of that set
+        q = vocab.freq[vocab_size] / sum(vocab.freq[vocab_size:])
+
+        rnn = RNN(vocab_size, hdim, vocab_size)
+        runner = Runner(rnn)
+
+        # Load parameters
+        dir = "matrices"
+        rnn.U = np.load(os.path.join(dir, "rnn.U.npy"))
+        rnn.V = np.load(os.path.join(dir, "rnn.V.npy"))
+        rnn.W = np.load(os.path.join(dir, "rnn.W.npy"))
+
+        # Evaluate on test set
+        docs = load_lm_dataset(data_folder + "/wiki-test.txt")
+        S_test = docs_to_indices(docs, word_to_num, 1, 1)
+        X_test, D_test = seqs_to_lmXY(S_test)
+
+        test_loss = runner.compute_mean_loss(X_test, D_test)
+        adjusted_test_loss = adjust_loss(test_loss, fraction_lost, q)
+
+        print("Mean loss: %.03f" % test_loss)
+        # Get perplexity from test_loss and adjusted_test_loss
+        print("Unadjusted perplexity: %.03f" % np.exp(test_loss))
+        print("Adjusted perplexity: %.03f" % np.exp(adjusted_test_loss))
+
+
     if mode == "train-np-rnn":
         """
         starter code for parameter estimation.
