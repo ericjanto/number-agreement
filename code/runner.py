@@ -550,7 +550,7 @@ if __name__ == "__main__":
         # --- your code here --- #
         ##########################
         hdims = [25, 50]
-        lrs = [0.1, 0.5]
+        lrs = [0.05, 0.1, 0.5]
         back_steps = [0, 2, 5]
 
         with open("finetuning.csv", "w") as f:
