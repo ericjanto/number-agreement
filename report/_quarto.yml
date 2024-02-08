@@ -1,5 +1,7 @@
 project:
   title: "Report"
+  render: 
+    - index.qmd
 
 author:
   - name: "<Samuel's exam number>"

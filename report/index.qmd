@@ -1,0 +1,61 @@
+```{python}
+# | echo: false
+from tabulate import tabulate
+from IPython.display import Markdown, display
+```
+
+\sloppy
+
+# NLU+ Coursework 1: Recurrent Neural Networks
+# Introductory Remarks
+Something about our project the markers should be aware of.
+
+# Question 2: Language Modelling
+
+## a) Finetuning of hyperparameters
+At this step, a hyperparameter grid search was conducted, considering the following values for each hyperparameter:
+
+- Hidden units: 25, 50
+- Learning rate: 0.01, 0.05, 0.5
+- Lookback steps: 0, 2, 5.
+
+@tbl-q2-a-finetuning shows the results of the hyperparameter search.
+
+```{python}
+# | echo: false
+# | tbl-cap: Results of the hyperparameter search, with 10 epochs of learning.
+# | label: tbl-q2-a-finetuning
+with open("data/csv/q2-a-finetuning.csv", "r") as f:
+    md_table_full = f.read().split("\n")[1:]
+
+md_table_no_loss = [
+    row.split(",")[:3] + [round(float(row.split(",")[-1]), 3)] for row in md_table_full
+]
+md_tabulated = tabulate(
+    md_table_no_loss,
+    headers=["Hidden units", "Learning rate", "Lookback steps", "Adjusted loss"],
+    tablefmt="pipe",
+)
+
+# Find row with best adjusted loss
+best_loss = float("inf")
+best_row = None
+for row in md_table_no_loss:
+    loss = float(row[-1])
+    if loss < best_loss:
+        best_loss = loss
+        best_row = row
+
+# Parse best row
+hdim, lr, lookback, loss = best_row
+
+Markdown(md_tabulated)
+```
+
+The best adjusted loss was found to be `{python} loss` with the following hyperparameters: hidden units `{python} hdim`, learning rate `{python} lr`, and lookback steps `{python} lookback`.
+
+Interpreting the results, it is noticable that the adjusted loss improves with more lookback steps. This is expected as backpropagation through time (BPTT) allows the model to unfold, i.e. propagate errors further back in time [@guoBackPropagationTime13]. This is particularly useful for long-term dependencies, which are common in natural language, the domain of our task.
+
+Furthermore, it was noticable that a smaller learning rate did not result in better performance. This is likely due to the fact that the model was trained for a fixed number of epochs, and a smaller learning rate would require more epochs to converge to the minimum. This is supported by the fact that the best learning rate was the largest one, `{python} lr`. For infinite training time we would expect larger learning rates to perform worse, as they would likely overshoot the minimum more often.
+
+In terms of the number of hidden units, there is no clear pattern in the results. Normally, we would expect more hidden units to outperform the smaller number of hidden units. Our most viable explanation is that the training data was too small for the larger number of hidden dimensions to be beneficial, and the results would be different in this regard when trained on more data.
