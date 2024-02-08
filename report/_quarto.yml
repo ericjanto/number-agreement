@@ -1,0 +1,12 @@
+project:
+  title: "Report"
+
+author:
+  - name: "<Samuel's exam number>"
+  - name: "B161564"
+
+format:
+  pdf:
+    toc: false
+    number-sections: false
+    colorlinks: true

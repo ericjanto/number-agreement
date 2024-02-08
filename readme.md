@@ -1,0 +1,2 @@
+- poetry install, poetry shell
+- cd report && quarto render
