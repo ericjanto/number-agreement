@@ -903,3 +903,127 @@ if __name__ == "__main__":
             ) / len(X_dev)
 
             print(f"Accuracy {hdim}: %.03f" % acc)
+
+    if mode == "train-question-4":
+        """
+        starter code for parameter estimation.
+        change this to different values, or use it to get you started with your own testing class
+        """
+        train_size = 10000
+        dev_size = 1000
+        vocab_size = 2000
+        epochs = 10
+        log = True
+        batch_size = 100
+        min_change = 0.0001
+        lookbacks = [1,3,5,10,20,30]
+
+        hdim = 50
+        lr = 0.5
+
+        # get the data set vocabulary
+        vocab = pd.read_table(
+            data_folder + "/vocab.wiki.txt",
+            header=None,
+            sep="\s+",
+            index_col=0,
+            names=["count", "freq"],
+        )
+        num_to_word = dict(enumerate(vocab.index[:vocab_size]))
+        word_to_num = invert_dict(num_to_word)
+
+        # calculate loss vocabulary words due to vocab_size
+        fraction_lost = fraq_loss(vocab, word_to_num, vocab_size)
+        print(
+            "Retained %d words from %d (%.02f%% of all tokens)\n"
+            % (vocab_size, len(vocab), 100 * (1 - fraction_lost))
+        )
+
+        # load training data
+        sents = load_np_dataset(data_folder + "/wiki-train.txt")
+        S_train = docs_to_indices(sents, word_to_num, 0, 0)
+        X_train, D_train = seqs_to_npXY(S_train)
+
+        X_train = X_train[:train_size]
+        Y_train = D_train[:train_size]
+
+        # load development data
+        sents = load_np_dataset(data_folder + "/wiki-dev.txt")
+        S_dev = docs_to_indices(sents, word_to_num, 0, 0)
+        X_dev, D_dev = seqs_to_npXY(S_dev)
+
+        X_dev = X_dev[:dev_size]
+        D_dev = D_dev[:dev_size]
+
+        ##########################
+        # --- your code here --- #
+        ##########################
+        print("Now training GRU")
+        for lookback in lookbacks:
+            acc = 0.0
+
+            gru = GRU(vocab_size, hdim, 2)
+            runner = Runner(gru)
+            gru_loss = runner.train_np(
+                X_train,
+                Y_train,
+                X_dev,
+                D_dev,
+                epochs=epochs,
+                learning_rate=lr,
+                anneal=0,
+                back_steps=lookback,
+                batch_size=batch_size,
+                min_change=min_change,
+                log=log,
+            )
+
+            dir = "matrices/question4/gru/lookback-" + str(lookback)
+
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Ur.npy"), gru.Ur)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vr.npy"), gru.Vr)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Uz.npy"), gru.Uz)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vz.npy"), gru.Vz)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Uh.npy"), gru.Uh)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vh.npy"), gru.Vh)
+            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.W.npy"), gru.W)
+
+            acc = sum(
+                [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            ) / len(X_dev)
+
+            print(f"Accuracy {hdim}: %.03f" % acc)
+
+        print("###########################################################")
+        print("Now training RNN")
+
+        for lookback in lookbacks:
+            acc = 0.0
+
+            rnn = RNN(vocab_size, hdim, 2)
+            runner = Runner(rnn)
+            rnn_loss = runner.train_np(
+                X_train,
+                Y_train,
+                X_dev,
+                D_dev,
+                epochs=epochs,
+                learning_rate=lr,
+                anneal=0,
+                back_steps=lookback,
+                batch_size=batch_size,
+                min_change=min_change,
+                log=log,
+            )
+
+            dir = "matrices/question4/rnn/lookback-" + str(lookback)
+
+            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.U.npy"), rnn.U)
+            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.V.npy"), rnn.V)
+            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.W.npy"), rnn.W)
+
+            acc = sum(
+                [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            ) / len(X_dev)
+
+            print(f"Accuracy {hdim}: %.03f" % acc)
