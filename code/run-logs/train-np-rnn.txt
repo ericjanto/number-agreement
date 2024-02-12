@@ -13,37 +13,6 @@ Initial learning rate set to 0.5, annealing set to 0
 calculating initial mean loss on dev set: 0.64862712201912
 calculating initial acc on dev set: 0.659
 
-epoch 1, learning rate 0.5000   instance 10000  epoch done in 8.17 seconds      new loss: 0.6224782467264176    new acc: 0.659
-epoch 2, learning rate 0.5000   instance 10000  epoch done in 7.97 seconds      new loss: 0.6068429513165507    new acc: 0.664
-epoch 3, learning rate 0.5000   instance 10000  epoch done in 9.16 seconds      new loss: 0.5746638598135759    new acc: 0.708
-epoch 4, learning rate 0.5000   instance 10000  epoch done in 10.39 seconds     new loss: 0.5556894010857644    new acc: 0.712
-epoch 5, learning rate 0.5000   instance 10000  epoch done in 9.13 seconds      new loss: 0.5431783578906285    new acc: 0.725
-epoch 6, learning rate 0.5000   instance 10000  epoch done in 8.45 seconds      new loss: 0.5312196097482518    new acc: 0.73
-epoch 7, learning rate 0.5000   instance 10000  epoch done in 8.47 seconds      new loss: 0.5192354798790431    new acc: 0.725
-epoch 8, learning rate 0.5000   instance 10000  epoch done in 8.19 seconds      new loss: 0.5084699340038081    new acc: 0.722
-epoch 9, learning rate 0.5000   instance 10000  epoch done in 14.06 seconds     new loss: 0.4993727950665032    new acc: 0.744
-epoch 10, learning rate 0.5000  instance 10000  epoch done in 7.68 seconds      new loss: 0.5111967670098961    new acc: 0.737
-
-training finished after reaching maximum of 10 epochs
-best observed loss was 0.4993727950665032, acc 0.744, at epoch 9
-setting U, V, W to matrices from best epoch
-Accuracy 10: 1.000
-
-(nlp-cw-01-py3.7) ➜  code git:(main) ✗ python runner.py train-np-rnn ../data
-Retained 2000 words from 9954 (88.35% of all tokens)
-
-
-Training model for 10 epochs
-training set: 10000 sentences (batch size 100)
-Optimizing loss on 1000 sentences
-Vocab size: 2000
-Hidden units: 10
-Steps for back propagation: 0
-Initial learning rate set to 0.5, annealing set to 0
-
-calculating initial mean loss on dev set: 0.64862712201912
-calculating initial acc on dev set: 0.659
-
 epoch 1, learning rate 0.5000   instance 10000  epoch done in 9.45 seconds      new loss: 0.6224782467264176    new acc: 0.659
 epoch 2, learning rate 0.5000   instance 10000  epoch done in 6.16 seconds      new loss: 0.6068429513165507    new acc: 0.664
 epoch 3, learning rate 0.5000   instance 10000  epoch done in 6.48 seconds      new loss: 0.5746638598135759    new acc: 0.708
