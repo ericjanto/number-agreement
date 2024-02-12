@@ -98,7 +98,7 @@ class RNN(Model):
             # --- your code here --- #
             ##########################
             x_onehot = make_onehot(x[t], self.vocab_size)
-            d_onehot = make_onehot(d[t], self.vocab_size)
+            d_onehot = make_onehot(d[t], self.out_vocab_size)
 
             g_net_out = y[t]
             g_der = np.ones(len(g_net_out))
@@ -174,7 +174,7 @@ class RNN(Model):
             g_der = np.ones(len(g))
             f_der = grad(s[t])
 
-            d_onehot = make_onehot(d[t], self.vocab_size)
+            d_onehot = make_onehot(d[t], self.out_vocab_size)
             delta_out = np.multiply(d_onehot - y[t], g_der)
             self.deltaW += np.outer(delta_out, s[t])
 
@@ -227,7 +227,7 @@ class RNN(Model):
         g_der = np.ones(len(g))
         f_der = grad(s[t])
 
-        d_onehot = make_onehot(d[0], self.vocab_size)
+        d_onehot = make_onehot(d[0], self.out_vocab_size)
         delta_out = np.multiply(d_onehot - y[t], g_der)
         self.deltaW += np.outer(delta_out, s[t])
 
