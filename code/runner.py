@@ -700,7 +700,6 @@ if __name__ == "__main__":
             % (vocab_size, len(vocab), 100 * (1 - fraction_lost))
         )
 
-
         # q = best unigram frequency from omitted vocab
         # this is the best expected loss out of that set
         q = vocab.freq[vocab_size] / sum(vocab.freq[vocab_size:])
@@ -726,7 +725,6 @@ if __name__ == "__main__":
         # Get perplexity from test_loss and adjusted_test_loss
         print("Unadjusted perplexity: %.03f" % np.exp(test_loss))
         print("Adjusted perplexity: %.03f" % np.exp(adjusted_test_loss))
-
 
     if mode == "train-np-rnn":
         """
@@ -916,7 +914,7 @@ if __name__ == "__main__":
         log = True
         batch_size = 100
         min_change = 0.0001
-        lookbacks = [1,3,5,10,20,30]
+        lookbacks = [1, 3, 5, 10, 20, 30]
 
         hdim = 50
         lr = 0.5
@@ -959,78 +957,112 @@ if __name__ == "__main__":
         # --- your code here --- #
         ##########################
         print("Now training GRU")
-        for lookback in lookbacks:
-            acc = 0.0
+        # for lookback in lookbacks:
+        #     acc = 0.0
 
-            gru = GRU(vocab_size, hdim, 2)
-            runner = Runner(gru)
-            gru_loss = runner.train_np(
-                X_train,
-                Y_train,
-                X_dev,
-                D_dev,
-                epochs=epochs,
-                learning_rate=lr,
-                anneal=0,
-                back_steps=lookback,
-                batch_size=batch_size,
-                min_change=min_change,
-                log=log,
-            )
+        #     gru = GRU(vocab_size, hdim, 2)
+        #     runner = Runner(gru)
+        #     gru_loss = runner.train_np(
+        #         X_train,
+        #         Y_train,
+        #         X_dev,
+        #         D_dev,
+        #         epochs=epochs,
+        #         learning_rate=lr,
+        #         anneal=0,
+        #         back_steps=lookback,
+        #         batch_size=batch_size,
+        #         min_change=min_change,
+        #         log=log,
+        #     )
 
-            dir = "matrices/question4/gru/lookback-" + str(lookback)
+        #     dir = "matrices/question4/gru"
 
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Ur.npy"), gru.Ur)
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vr.npy"), gru.Vr)
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Uz.npy"), gru.Uz)
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vz.npy"), gru.Vz)
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Uh.npy"), gru.Uh)
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.Vh.npy"), gru.Vh)
-            np.save(os.path.join(dir, f"gru_np_hdim{hdim}.W.npy"), gru.W)
+        #     np.save(os.path.join(dir, f"gru_np_lb_{lookback}.Ur.npy"), gru.Ur)
+        #     np.save(os.path.join(dir, f"gru_np_lb_{lookback}.Vr.npy"), gru.Vr)
+        #     np.save(os.path.join(dir, f"gru_np_lb_{lookback}.Uz.npy"), gru.Uz)
+        #     np.save(os.path.join(dir, f"gru_np_lb_{lookback}.Vz.npy"), gru.Vz)
+        #     np.save(os.path.join(dir, f"gru_np_lb_{lookback}.Uh.npy"), gru.Uh)
+        #     np.save(os.path.join(dir, f"gru_np_lb_{lookback}.Vh.npy"), gru.Vh)
+        #     np.save(os.path.join(dir, f"gru_np_lb_{lookback}.W.npy"), gru.W)
 
-            acc = sum(
-                [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
-            ) / len(X_dev)
+        #     acc = sum(
+        #         [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+        #     ) / len(X_dev)
 
-            print(f"Accuracy {hdim}: %.03f" % acc)
+        #     print(f"Accuracy {hdim}: %.03f" % acc)
 
-        print()
+        #     losses = np.array(
+        #         [runner.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+        #     )
+        #     losses_sorted = np.argsort(losses)
 
-        losses = (np.array(
-            [runner.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
-            ))
-        losses_sorted = np.argsort(losses)
+        #     accuracy = np.array(
+        #         [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+        #     )
+        #     accuracy_sorted = np.argsort(accuracy)
 
-        accuracy = (np.array(
-            [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
-        ))
-        accuracy_sorted = np.argsort(accuracy)
+        #     if not os.path.exists(
+        #         "loss-sentences/gru/lookback-" + str(lookback)
+        #     ):
+        #         os.makedirs(
+        #             "loss-sentences/gru/lookback-" + str(lookback)
+        #         )
 
-        print()
-        print("Sentences with lowest losses")
-        for i in range(10):
-            print(X_dev[losses_sorted[i]])
-            print(losses[losses_sorted[i]])
+        #     with open(
+        #         "loss-sentences/gru/lookback-"
+        #         + str(lookback)
+        #         + "/sentences_with_lowest_losses.csv",
+        #         "w",
+        #     ) as f:
+        #         header = ["sentence", "loss"]
+        #         writer = csv.writer(f)
+        #         writer.writerow(header)
+        #         for i in range(10):
+        #             writer.writerow([X_dev[losses_sorted[i]], losses[losses_sorted[i]]])
 
-        print()
-        print("Sentences with highest losses")
-        for i in range(10):
-            print(X_dev[losses_sorted[-i]])
-            print(losses[losses_sorted[-i]])
+        #     with open(
+        #         "loss-sentences/gru/lookback-"
+        #         + str(lookback)
+        #         + "/sentences_with_highest_losses.csv",
+        #         "w",
+        #     ) as f:
+        #         header = ["sentence", "loss"]
+        #         writer = csv.writer(f)
+        #         writer.writerow(header)
+        #         for i in range(10):
+        #             writer.writerow(
+        #                 [X_dev[losses_sorted[-i]], losses[losses_sorted[-i]]]
+        #             )
 
-        print()
-        print("Sentences with highest accuracy")
-        for i in range(10):
-            print(X_dev[accuracy_sorted[-i]])
-            print(accuracy[accuracy_sorted[-i]])
+        #     with open(
+        #         "loss-sentences/gru/lookback-"
+        #         + str(lookback)
+        #         + "/sentences_with_highest_accuracy.csv",
+        #         "w",
+        #     ) as f:
+        #         header = ["sentence", "accuracy"]
+        #         writer = csv.writer(f)
+        #         writer.writerow(header)
+        #         for i in range(10):
+        #             writer.writerow(
+        #                 [X_dev[accuracy_sorted[-i]], accuracy[accuracy_sorted[-i]]]
+        #             )
 
-        print()
-        print("Sentences with lowest accuracy")
-        for i in range(10):
-            print(X_dev[accuracy_sorted[i]])
-            print(accuracy[accuracy_sorted[i]])
+        #     with open(
+        #         "loss-sentences/gru/lookback-"
+        #         + str(lookback)
+        #         + "/sentences_with_lowest_accuracy.csv",
+        #         "w",
+        #     ) as f:
+        #         header = ["sentence", "accuracy"]
+        #         writer = csv.writer(f)
+        #         writer.writerow(header)
+        #         for i in range(10):
+        #             writer.writerow(
+        #                 [X_dev[accuracy_sorted[i]], accuracy[accuracy_sorted[i]]]
+        #             )
 
-        print()
         print("###########################################################")
         print("Now training RNN")
 
@@ -1053,11 +1085,11 @@ if __name__ == "__main__":
                 log=log,
             )
 
-            dir = "matrices/question4/rnn/lookback-" + str(lookback)
+            dir = "matrices/question4/rnn"
 
-            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.U.npy"), rnn.U)
-            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.V.npy"), rnn.V)
-            np.save(os.path.join(dir, f"rnn_np_hdim{hdim}.W.npy"), rnn.W)
+            np.save(os.path.join(dir, f"rnn_np_lb_{lookback}.U.npy"), rnn.U)
+            np.save(os.path.join(dir, f"rnn_np_lb_{lookback}.V.npy"), rnn.V)
+            np.save(os.path.join(dir, f"rnn_np_lb_{lookback}.W.npy"), rnn.W)
 
             acc = sum(
                 [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
@@ -1065,38 +1097,75 @@ if __name__ == "__main__":
 
             print(f"Accuracy {hdim}: %.03f" % acc)
 
-        print()
+            print()
 
-        losses = (np.array(
-            [runner.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
-            ))
-        losses_sorted = np.argsort(losses)
+            losses = np.array(
+                [runner.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            )
+            losses_sorted = np.argsort(losses)
 
-        accuracy = (np.array(
-            [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
-        ))
-        accuracy_sorted = np.argsort(accuracy)
+            accuracy = np.array(
+                [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            )
+            accuracy_sorted = np.argsort(accuracy)
 
-        print()
-        print("Sentences with lowest losses")
-        for i in range(10):
-            print(X_dev[losses_sorted[i]])
-            print(losses[losses_sorted[i]])
+            if not os.path.exists(
+                "loss-sentences/rnn/lookback-" + str(lookback)
+            ):
+                os.makedirs(
+                    "loss-sentences/rnn/lookback-" + str(lookback)
+                )
 
-        print()
-        print("Sentences with highest losses")
-        for i in range(10):
-            print(X_dev[losses_sorted[-i]])
-            print(losses[losses_sorted[-i]])
+            with open(
+                "loss-sentences/rnn/lookback-"
+                + str(lookback)
+                + "/sentences_with_lowest_losses.csv",
+                "w",
+            ) as f:
+                header = ["sentence", "loss"]
+                writer = csv.writer(f)
+                writer.writerow(header)
+                for i in range(10):
+                    writer.writerow([X_dev[losses_sorted[i]], losses[losses_sorted[i]]])
 
-        print()
-        print("Sentences with highest accuracy")
-        for i in range(10):
-            print(X_dev[accuracy_sorted[-i]])
-            print(accuracy[accuracy_sorted[-i]])
+            with open(
+                "loss-sentences/rnn/lookback-"
+                + str(lookback)
+                + "/sentences_with_highest_losses.csv",
+                "w",
+            ) as f:
+                header = ["sentence", "loss"]
+                writer = csv.writer(f)
+                writer.writerow(header)
+                for i in range(10):
+                    writer.writerow(
+                        [X_dev[losses_sorted[-i]], losses[losses_sorted[-i]]]
+                    )
 
-        print()
-        print("Sentences with lowest accuracy")
-        for i in range(10):
-            print(X_dev[accuracy_sorted[i]])
-            print(accuracy[accuracy_sorted[i]])
+            with open(
+                "loss-sentences/rnn/lookback-"
+                + str(lookback)
+                + "/sentences_with_highest_accuracy.csv",
+                "w",
+            ) as f:
+                header = ["sentence", "accuracy"]
+                writer = csv.writer(f)
+                writer.writerow(header)
+                for i in range(10):
+                    writer.writerow(
+                        [X_dev[accuracy_sorted[-i]], accuracy[accuracy_sorted[-i]]]
+                    )
+
+            with open(
+                "loss-sentences/rnn/lookback-"
+                + str(lookback)
+                + "/sentences_with_lowest_accuracy.csv",
+                "w",
+            ) as f:
+                header = ["sentence", "accuracy"]
+                writer = csv.writer(f)
+                writer.writerow(header)
+                for i in range(10):
+                    writer.writerow(
+                        [X_dev[accuracy_sorted[i]], accuracy[accuracy_sorted[i]]]
+                    )
