@@ -994,6 +994,43 @@ if __name__ == "__main__":
 
             print(f"Accuracy {hdim}: %.03f" % acc)
 
+        print()
+
+        losses = (np.array(
+            [runner.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            ))
+        losses_sorted = np.argsort(losses)
+
+        accuracy = (np.array(
+            [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+        ))
+        accuracy_sorted = np.argsort(accuracy)
+
+        print()
+        print("Sentences with lowest losses")
+        for i in range(10):
+            print(X_dev[losses_sorted[i]])
+            print(losses[losses_sorted[i]])
+
+        print()
+        print("Sentences with highest losses")
+        for i in range(10):
+            print(X_dev[losses_sorted[-i]])
+            print(losses[losses_sorted[-i]])
+
+        print()
+        print("Sentences with highest accuracy")
+        for i in range(10):
+            print(X_dev[accuracy_sorted[-i]])
+            print(accuracy[accuracy_sorted[-i]])
+
+        print()
+        print("Sentences with lowest accuracy")
+        for i in range(10):
+            print(X_dev[accuracy_sorted[i]])
+            print(accuracy[accuracy_sorted[i]])
+
+        print()
         print("###########################################################")
         print("Now training RNN")
 
@@ -1027,3 +1064,39 @@ if __name__ == "__main__":
             ) / len(X_dev)
 
             print(f"Accuracy {hdim}: %.03f" % acc)
+
+        print()
+
+        losses = (np.array(
+            [runner.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            ))
+        losses_sorted = np.argsort(losses)
+
+        accuracy = (np.array(
+            [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+        ))
+        accuracy_sorted = np.argsort(accuracy)
+
+        print()
+        print("Sentences with lowest losses")
+        for i in range(10):
+            print(X_dev[losses_sorted[i]])
+            print(losses[losses_sorted[i]])
+
+        print()
+        print("Sentences with highest losses")
+        for i in range(10):
+            print(X_dev[losses_sorted[-i]])
+            print(losses[losses_sorted[-i]])
+
+        print()
+        print("Sentences with highest accuracy")
+        for i in range(10):
+            print(X_dev[accuracy_sorted[-i]])
+            print(accuracy[accuracy_sorted[-i]])
+
+        print()
+        print("Sentences with lowest accuracy")
+        for i in range(10):
+            print(X_dev[accuracy_sorted[i]])
+            print(accuracy[accuracy_sorted[i]])
