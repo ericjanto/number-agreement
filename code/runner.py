@@ -316,7 +316,7 @@ class Runner(object):
         batch_size=100,
         min_change=0.0001,
         log=True,
-        save_loss_acc_file = None
+        save_loss_acc_file = False
     ):
         """
         train the model on some training set X, D while optimizing the loss on a dev set X_dev, D_dev
@@ -459,10 +459,8 @@ class Runner(object):
                 self.model.save_params()
                 best_epoch = epoch
 
-            if save_loss_acc_file!=None:
-                with open(save_loss_acc_file, "a") as f:
-                    writer = csv.writer(f)
-                    writer.writerow([epoch, loss, acc])
+            if save_loss_acc_file:
+                acc_loss.append([epoch, loss, acc])
 
             # make sure we change the RNN enough
             if abs(prev_loss - loss) < min_change:
@@ -1210,6 +1208,7 @@ if __name__ == "__main__":
 
         results_header = [
             "mean_loss_np",
+            "accuracy",
             "model",
             "lookback",
         ]
@@ -1238,9 +1237,11 @@ if __name__ == "__main__":
 
             # mean np loss
             mean_loss = sum([runner_rnn.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
+            accuracy = sum([runner_rnn.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
             results.append(
                 [
                     mean_loss,
+                    accuracy,
                     "rnn",
                     lookback,
                 ]
@@ -1258,9 +1259,11 @@ if __name__ == "__main__":
 
             # Evaluate on test set
             mean_loss = sum([runner_gru.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
+            accuracy = sum([runner_rnn.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
             results.append(
                 [
                     mean_loss,
+                    accuracy,
                     "gru",
                     lookback,
                 ]
@@ -1442,8 +1445,11 @@ if __name__ == "__main__":
         X_dev = X_dev[:dev_size]
         D_dev = D_dev[:dev_size]
 
+        global acc_loss
+
         for anneal in anneal_values:
             acc = 0.0
+            acc_loss = []
 
             rnn = RNN(vocab_size, hdim, 2)
             runner = Runner(rnn)
@@ -1459,8 +1465,13 @@ if __name__ == "__main__":
                 batch_size=batch_size,
                 min_change=min_change,
                 log=log,
-                save_loss_acc_loss="question_5_loss_acc.csv"
+                save_loss_acc_file=True
             )
+
+            with open(f"question_5_anneal_{anneal}_loss_acc.csv", "w") as f:
+                writer = csv.writer(f)
+                writer.writerow(["epoch", "loss", "acc"])
+                writer.writerows(acc_loss)
 
             dir = "matrices/question5"
 
