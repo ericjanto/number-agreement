@@ -250,6 +250,3 @@ class RNN(Model):
                 delta_in_t_minus_steps, make_onehot(x[t - i], self.vocab_size)
             )
             self.deltaU += np.outer(delta_in_t_minus_steps, s[t - i - 1])
-
-
-
