@@ -1179,7 +1179,16 @@ if __name__ == "__main__":
         hdim = 50
         lr = 0.5
 
-                num_to_word = dict(enumerate(vocab.index[:vocab_size]))
+        vocab = pd.read_table(
+            data_folder + "/vocab.wiki.txt",
+            header=None,
+            sep="\s+",
+            index_col=0,
+            names=["count", "freq"],
+        )
+
+
+        num_to_word = dict(enumerate(vocab.index[:vocab_size]))
         word_to_num = invert_dict(num_to_word)
 
         # calculate loss vocabulary words due to vocab_size
