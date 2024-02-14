@@ -13,6 +13,7 @@ from model import Model
 from rnn import RNN
 from gru import GRU
 
+import csv
 
 class Runner(object):
     """
@@ -1178,15 +1179,7 @@ if __name__ == "__main__":
         hdim = 50
         lr = 0.5
 
-        # get the data set vocabulary
-        vocab = pd.read_table(
-            data_folder + "/vocab.wiki.txt",
-            header=None,
-            sep="\s+",
-            index_col=0,
-            names=["count", "freq"],
-        )
-        num_to_word = dict(enumerate(vocab.index[:vocab_size]))
+                num_to_word = dict(enumerate(vocab.index[:vocab_size]))
         word_to_num = invert_dict(num_to_word)
 
         # calculate loss vocabulary words due to vocab_size
@@ -1266,3 +1259,60 @@ if __name__ == "__main__":
                     lookback,
                 ]
             )
+
+    # get the data set vocabulary
+    if mode == "get_sentences":
+
+        vocab_size = 2000
+
+        lookbacks = [1, 3, 5, 10, 20, 30]
+        models = ["rnn", "gru"]
+        fileNames = ["sentences_with_lowest_losses.csv",
+                     "sentences_with_highest_losses.csv",
+                     "sentences_with_highest_accuracy.csv",
+                     "sentences_with_lowest_accuracy.csv"]
+
+        vocab = pd.read_table(
+            data_folder + "/vocab.wiki.txt",
+            header=None,
+            sep="\s+",
+            index_col=0,
+            names=["count", "freq"],
+        )
+
+        num_to_word = dict(enumerate(vocab.index[:vocab_size]))
+        word_to_num = invert_dict(num_to_word)
+
+        for model in models:
+            print()
+            print()
+            print("##########################################################################################")
+            print("##########################################################################################")
+            print("SENTENCES FOR MODEL: " + model)
+
+            for lookback in lookbacks:
+                print()
+                print("##########################################################################################")
+                print("LOOKBACK: " + str(lookback))
+                for fileName in fileNames:
+                    print()
+                    print(fileName)
+                    file = open("loss-sentences/" + model +
+                                "/lookback-" + str(lookback) +
+                                "/" + fileName, "r")
+                    csvreader = csv.reader(file)
+                    _ = next(csvreader)
+
+                    sentences = []
+                    stats = []
+
+                    for row in csvreader:
+                        sentence = row[0].replace("[", "").replace("]", "")
+                        sentence = sentence.split()
+                        sentence = np.array(sentence, dtype=int)
+                        sentence = [num_to_word[wordNum] for wordNum in sentence]
+                        sentences.append(sentence)
+                        stats.append(row[1])
+
+                        print(sentence)
+                        print(row[1])

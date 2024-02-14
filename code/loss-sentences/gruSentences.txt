@@ -1,0 +1,551 @@
+
+
+##########################################################################################
+##########################################################################################
+SENTENCES FOR MODEL: gru
+
+##########################################################################################
+LOOKBACK: 1
+
+sentences_with_lowest_losses.csv
+['these', 'three', 'sources']
+0.000971053670779286
+['financial', 'NNS', 'and', 'NNS', 'often']
+0.0011236660254107791
+['UNK', ',', 'those', 'last', 'two', 'NNS', 'you', 'give']
+0.001141797694215119
+['UNK', ',', 'while', 'those', 'on', 'the', 'upper', 'areas', 'of', 'the', 'mountain', 'close', 'earlier', 'so', 'to', 'make', 'sure', 'NNS']
+0.0015946586834681808
+['the', 'idea', 'we', 'are', 'going', 'with', 'this', 'one']
+0.0018290558008377529
+['all', 'other', 'NNS']
+0.0018702623947035456
+['although', 'these', 'sources']
+0.002013746554893711
+['this', 'relatively', 'low', 'pressure']
+0.002043507489914168
+['the', 'advantage', 'of', 'a', 'NN']
+0.002112026689914766
+['those', 'two', 'lines']
+0.002130075090910439
+
+sentences_with_highest_losses.csv
+['these', 'three', 'sources']
+0.000971053670779286
+['in', 'three', 'UNK', ',', 'three', 'JJ', 'UNK', 'are', 'UNK', 'and', 'the', 'three', 'UNK', 'of', 'a', 'point']
+6.007282881834155
+['UNK', 'JJ', 'UNK', 'who', 'might', 'not', 'have', 'a', 'shot']
+5.024462679772007
+['the', 'top', 'ones']
+4.755388559111729
+['one', 'common', 'NN', 'process', 'of', 'UNK', 'for', 'professional', 'NNS', 'and', 'bands']
+4.702669512744508
+['other', 'UNK', 'VBN', 'to', 'contain', 'the', 'NN']
+4.274059096185233
+['i', 'would', 'hope', 'that', 'my', 'UNK', 'in', 'UNK', 'a', 'more', 'UNK', 'article']
+4.176767741758511
+['it', 'means', 'that', 'the', 'UNK', 'causes', 'of', 'the', 'problems', 'in', 'the', 'NNP', 'topic', 'area']
+3.8943232195423874
+['the', 'museum', 'UNK']
+3.763908326443498
+['in', 'his', 'NN', ',', 'NNP', "'s", 'UNK', 'sentence', ',', '``', 'although', 'such', 'performance', 'UNK', 'is', 'UNK', 'JJ', ',', 'JJ', 'per', 'UNK']
+3.5903766769735244
+
+sentences_with_highest_accuracy.csv
+['alternative', 'NNS', 'of', 'this', 'last', 'name']
+False
+['the', 'pair']
+True
+['each', 'chapter', 'of', 'the', 'book']
+True
+['a', 'NN', 'is', 'VBN', 'by', 'the', 'entire', 'NN', 'space', ',', 'and', 'so', 'these', 'structures']
+True
+['it', 'is', 'UNK', 'through', 'their', 'former', 'UNK', ',', 'political', 'NNS', 'and', 'business', 'relationships', ',', 'the', 'group']
+True
+['i', 'UNK', 'that', 'many', 'editors', 'of', 'some', 'articles']
+True
+['the', 'map']
+True
+['the', 'JJ', 'UNK', 'of', 'NN', 'to', 'NN']
+True
+['because', 'of', 'NN', 'of', 'NNP', ',', 'the', 'subject']
+True
+['a', 'VBN', 'NNP', 'message', 'in', 'october', 'UNK']
+True
+
+sentences_with_lowest_accuracy.csv
+['alternative', 'NNS', 'of', 'this', 'last', 'name']
+False
+['other', 'UNK', 'VBN', 'to', 'contain', 'the', 'NN']
+False
+['NNP', ',', 'who', 'UNK', 'NNP', 'he', 'UNK', 'him', 'access', 'to', 'city', 'hall', ',', 'records']
+False
+['in', 'NN', 'studies', ',', 'UNK', 'NN', 'treatment']
+False
+['for', 'the', 'example', 'of', 'NNP', 'NN', ',', 'the', 'NN', 'UNK']
+False
+['researchers']
+False
+['many', 'of', 'his', 'NNS', 'are', 'physical', ',', 'UNK', 'that', 'the', 'UNK']
+False
+['the', 'main', 'UNK']
+False
+['this', 'account', "'s", 'only', 'edits']
+False
+['where', 'reasonable', 'UNK']
+False
+
+##########################################################################################
+LOOKBACK: 3
+
+sentences_with_lowest_losses.csv
+['however', ',', 'when', 'a', 'female']
+0.0002995327009412878
+['for', 'example', ',', 'if', 'all', 'NNS', 'that', 'we', 'have', 'UNK', 'so', 'far', 'are', 'white', ',', 'we', 'may', 'VB', 'that', 'the', 'possibility', 'that', 'all', 'NNS']
+0.00031618788738376
+['i', 'UNK', 'that', 'many', 'editors', 'of', 'some', 'articles']
+0.00037059343335634154
+['although', 'these', 'sources']
+0.0003846857716729151
+['NNP', 'anyone', 'know', 'what', 'type', 'of', 'material', 'this']
+0.00044031924331155634
+['all', 'other', 'NNS']
+0.0004987884742301489
+['NNS', 'are', 'put', 'up', ',', 'UNK', 'are', 'placed', 'in', 'UNK', ',', 'and', 'students']
+0.0005114769918157474
+['and', 'there', 'are', 'few', 'concerns', 'on', 'wikipedia', 'that', 'are', 'so', 'JJ', 'that', 'they', 'need', 'to', 'be', 'UNK', 'before', 'a', 'discussion']
+0.0005285715710457356
+['other', 'afd', 'results', 'for', 'other', 'articles']
+0.0005330776485168093
+['a', 'unique', 'feature', 'of', 'this', 'UNK']
+0.0006315359890906998
+
+sentences_with_highest_losses.csv
+['however', ',', 'when', 'a', 'female']
+0.0002995327009412878
+['other', 'UNK', 'VBN', 'to', 'contain', 'the', 'NN']
+4.782549713691627
+['i', 'would', 'hope', 'that', 'my', 'UNK', 'in', 'UNK', 'a', 'more', 'UNK', 'article']
+4.325334177000032
+['in', 'an', 'ever', 'more', 'connected', 'world', ',', 'foreign', 'policy', 'factors']
+4.125495061109369
+['alternative', 'NNS', 'of', 'this', 'last', 'name']
+3.914860442676132
+['in', 'three', 'UNK', ',', 'three', 'JJ', 'UNK', 'are', 'UNK', 'and', 'the', 'three', 'UNK', 'of', 'a', 'point']
+3.69200627099619
+['the', 'groups', 'usually']
+3.6593591021324636
+['notes', 'found', 'by', 'NNS', 'after', 'the', 'NN']
+3.575054559637698
+['one', 'of', 'the', 'UNK', 'of', 'his', 'thought', 'is', 'to', 'show', 'that', 'his', 'categories', 'of', 'truth']
+3.5670415984500923
+['UNK', 'JJ', 'UNK', 'who', 'might', 'not', 'have', 'a', 'shot']
+3.51535113924847
+
+sentences_with_highest_accuracy.csv
+['other', 'UNK', 'VBN', 'to', 'contain', 'the', 'NN']
+False
+['the', 'pair']
+True
+['UNK', 'UNK', 'and', 'NN', 'materials']
+True
+['a', 'VBN', 'NNP', 'message', 'in', 'october', 'UNK']
+True
+['the', 'NNP', 'NNP', 'incident']
+True
+['this', 'name']
+True
+['both', 'UNK']
+True
+['UNK']
+True
+['UNK', 'UNK', 'stations', 'in', 'canada']
+True
+['protection', 'of', 'a', 'JJ', 'zone']
+True
+
+sentences_with_lowest_accuracy.csv
+['other', 'UNK', 'VBN', 'to', 'contain', 'the', 'NN']
+False
+['north', 'UNK', 'trains', 'usually']
+False
+['the', 'main', 'UNK', 'of', 'NNP']
+False
+['the', 'UNK', 'i', 'would', 'like']
+False
+['UNK']
+False
+['for', 'the', 'example', 'of', 'NNP', 'NN', ',', 'the', 'NN', 'UNK']
+False
+['pov', 'UNK', 'who', 'decide', 'that', 'what', 'the', 'project', 'really']
+False
+['alternative', 'NNS', 'of', 'this', 'last', 'name']
+False
+['the', 'main', 'UNK']
+False
+['the', 'UNK']
+False
+
+##########################################################################################
+LOOKBACK: 5
+
+sentences_with_lowest_losses.csv
+['these', 'three', 'sources']
+0.00043712626660725876
+['the', 'external', 'links', 'section']
+0.0008204925617633861
+['although', 'these', 'sources']
+0.000979323616092288
+['all', 'other', 'NNS']
+0.0009830902216897133
+['it', 'is', 'unknown', 'how', 'many', 'of', 'both', 'types', 'were', 'in', 'fact', 'built', 'or', 'UNK', ';', 'at', 'least', 'one', 'vehicle', 'with', 'a', 'NN']
+0.0010303980661513466
+['financial', 'NNS', 'and', 'NNS', 'often']
+0.001079017151889034
+['it', 'has', 'no', 'history', ',', 'no', 'description', ',', 'and', 'the', '``', 'image', "''", 'link']
+0.0012583186358731235
+['if', 'not', 'blocked', ',', 'this', 'user']
+0.0015476351469113413
+['if', 'a', 'page']
+0.0015903800775845627
+['it', 'should', 'be', 'noted', ',', 'however', ',', 'that', 'these', 'NNS']
+0.001804274261976543
+
+sentences_with_highest_losses.csv
+['these', 'three', 'sources']
+0.00043712626660725876
+['although', 'current', 'material', 'costs']
+5.073311575743531
+['to', 'this', 'day', ',', 'some', 'JJ', 'NNS', 'such', 'as', 'the', '(', 'JJ', ')', 'NNP', 'NNP', ',']
+4.799703052191519
+['the', 'links', 'provided', 'by', 'NNP']
+3.8419049282280353
+['then', 'have', 'a', 'friend', 'or', 'family', 'member', 'go', 'alone', 'into', 'the', 'UNK', ',', 'open', 'the', 'second', 'UNK', ',', 'and', 'VBP', 'an', 'equal', 'volume', 'of', 'each', 'into', 'two', 'identical', 'NNS', ',', 'and', 'note', 'UNK', 'which', 'glass']
+3.8183159743102264
+['where', 'reasonable', 'UNK']
+3.7717722262144084
+['stations', 'for', 'the', 'UNK', 'from', 'date', 'of', 'UNK', 'until', 'UNK', 'and', 'a', 'UNK', 'station']
+3.7552002518615293
+['the', 'girls']
+3.7467739937141893
+['many', 'items', 'available', 'in', 'larger', 'NNS', 'can', 'be', 'found', 'in', 'japanese', 'UNK', 'UNK', ',', 'though', 'the', 'UNK']
+3.713795279974721
+['this', 'account', "'s", 'only', 'edits']
+3.6561325630929247
+
+sentences_with_highest_accuracy.csv
+['the', 'UNK', 'i', 'would', 'like']
+False
+['the', 'pair']
+True
+['UNK', 'UNK', 'stations', 'in', 'canada']
+True
+['some', 'NN', 'trains']
+True
+['a', 'NN', 'is', 'VBN', 'by', 'the', 'entire', 'NN', 'space', ',', 'and', 'so', 'these', 'structures']
+True
+['it', 'is', 'UNK', 'through', 'their', 'former', 'UNK', ',', 'political', 'NNS', 'and', 'business', 'relationships', ',', 'the', 'group']
+True
+['i', 'UNK', 'that', 'many', 'editors', 'of', 'some', 'articles']
+True
+['the', 'map']
+True
+['the', 'JJ', 'UNK', 'of', 'NN', 'to', 'NN']
+True
+['because', 'of', 'NN', 'of', 'NNP', ',', 'the', 'subject']
+True
+
+sentences_with_lowest_accuracy.csv
+['the', 'UNK', 'i', 'would', 'like']
+False
+['for', 'a', 'time', 'under', 'british', 'rail', 'direct', 'trains', 'UNK', 'to', 'london', 'UNK', ',', 'now', 'UNK']
+False
+['this', 'UNK', 'at', 'the', 'JJ', 'level', 'still']
+False
+['the', 'UNK', 'UNK']
+False
+['be', 'UNK', ',', 'if', 'someone', 'VBZ', 'with', 'you', 'VBG', 'the', 'NNP', 'box', 'onto', 'the', 'front', 'page', ',', 'they', 'can', 'UNK', 'with', 'one', 'UNK', 'and', 'the', 'JJ', 'UNK']
+False
+['the', 'remaining', 'UNK', 'will', 'be', 'added', 'to', 'the', 'digital', 'collection', 'as', 'UNK']
+False
+['UNK', 'on', 'NNP']
+False
+['UNK', 'in', 'this', 'township']
+False
+['one', 'argument', 'is', 'that', 'UNK']
+False
+['a', 'system', 'VBG', 'on', 'security', 'through', 'NN', 'may', 'have', 'actual', 'security', 'NNS', ',', 'but', 'its', 'UNK', 'or', 'UNK', 'UNK']
+False
+
+##########################################################################################
+LOOKBACK: 10
+
+sentences_with_lowest_losses.csv
+['i', 'UNK', 'that', 'many', 'editors', 'of', 'some', 'articles']
+6.655077496750123e-05
+['therefore', 'an', 'object', 'with', 'a', 'charge', 'of', '1', 'NN']
+0.00021393192798095558
+['these', 'three', 'sources']
+0.00031121920289747096
+['the', 'subject', 'of', 'the', 'article']
+0.0003509607723043927
+['using', 'the', 'UNK', 'NNP', "'s", 'd', 'NN', 'or', 'by', 'VBG', 'the', 'bottom', 'screen', 'with', 'the', 'NNP', 'the', 'player']
+0.00041664202534186126
+['other', 'afd', 'results', 'for', 'other', 'articles']
+0.0004730541217158567
+['this', 'type', 'of', 'shot']
+0.0005463977102683452
+['an', 'issue', 'for', 'the', 'JJ', 'theory', 'of', 'UNK', 'NN']
+0.0007269209917995286
+['UNK', 'in', 'northern', 'UNK', 'over', 'a', 'period', 'of', 'three', 'years', ',', 'the', 'story']
+0.0007297681493136297
+['all', 'other', 'NNS']
+0.0007400594063558506
+
+sentences_with_highest_losses.csv
+['i', 'UNK', 'that', 'many', 'editors', 'of', 'some', 'articles']
+6.655077496750123e-05
+['the', 'main', 'UNK', 'that', 'vary', 'from', 'engine', 'to', 'engine']
+4.80691932498995
+['UNK', 'JJ', 'UNK', 'who', 'might', 'not', 'have', 'a', 'shot']
+4.705834084427014
+['i', 'would', 'hope', 'that', 'my', 'UNK', 'in', 'UNK', 'a', 'more', 'UNK', 'article']
+4.4210072463132635
+['one', 'of', 'the', 'UNK', 'of', 'his', 'thought', 'is', 'to', 'show', 'that', 'his', 'categories', 'of', 'truth']
+4.345368011154506
+['due', 'to', 'this', 'fact', ',', 'the', 'UNK']
+4.325488604814501
+['others', 'common', 'side', 'effects']
+4.308039892501502
+['although', 'current', 'material', 'costs']
+4.266690513616915
+['UNK', ',', 'although', 'NNP', 'UNK', 'had', 'the', 'UNK', 'of', 'VBG', 'the', 'NNP', ',', 'it', 'has', 'the', 'problem', 'that', 'the', 'UNK']
+4.123019619869882
+['due', 'to', 'the', 'hard', 'NN', 'of', 'UNK', 'NN', ',', 'the', 'UNK', 'of', 'this', 'trail']
+3.90169051064021
+
+sentences_with_highest_accuracy.csv
+['the', 'museum', 'UNK']
+False
+['the', 'pair']
+True
+['i', 'have', 'not', 'yet', 'had', 'the', 'need', 'to', 'do', 'much', 'regarding', 'NNS', ',', 'so', 'my', 'experience']
+True
+['a', 'VBN', 'NNP', 'message', 'in', 'october', 'UNK']
+True
+['the', 'NNP', 'NNP', 'incident']
+True
+['this', 'name']
+True
+['both', 'UNK']
+True
+['UNK']
+True
+['UNK', 'UNK', 'stations', 'in', 'canada']
+True
+['protection', 'of', 'a', 'JJ', 'zone']
+True
+
+sentences_with_lowest_accuracy.csv
+['the', 'museum', 'UNK']
+False
+['in', 'my', 'view', ',', 'the', 'strength', 'and', 'value', 'of', 'wikipedia']
+False
+['the', 'largest', 'radio', 'and', 'television', 'stations']
+False
+['one', 'argument', 'is', 'that', 'UNK']
+False
+['the', 'subjects', 'of', 'his', 'UNK']
+False
+['the', 'five', 'women', 'VBN', 'under', 'NNP']
+False
+['john', 'UNK', 'NN', ',', 'too', ',', 'can', 'be', 'UNK', 'using', 'NNS', ',', 'if', 'the', 'means', 'of', 'UNK', 'the', 'relationships', 'between', 'different', 'NN', 'values']
+False
+['however', ',', 'previous', 'UNK', 'UNK']
+False
+['NNP', 'NNP', 'wrote', 'an', 'article', 'UNK', 'that', 'people']
+False
+['process']
+False
+
+##########################################################################################
+LOOKBACK: 20
+
+sentences_with_lowest_losses.csv
+['these', 'three', 'sources']
+0.0001483734099531947
+['other', 'afd', 'results', 'for', 'other', 'articles']
+0.00033511444260084943
+['a', 'JJ', 'UNK', 'NN']
+0.0003505314887845527
+['all', 'other', 'NNS']
+0.0003984627763951053
+['to', 'the', 'east', ',', 'a', 'bridge']
+0.00041770636819947433
+['if', 'low', 'on', 'NNS', ',', 'many', 'players']
+0.00044315946435440984
+['a', 'russian', 'broad', 'UNK', 'line']
+0.0004987956549420496
+['these', 'mode', 'NNS']
+0.0005190186956146752
+['although', 'these', 'sources']
+0.0005353652324586205
+['RB', 'UNK', 'the', 'UNK', 'and', 'UNK', 'there', 'UNK', 'UNK', ',', 'although', 'the', 'UNK', 'UNK', 'rules', 'VBD', 'that', 'both', 'teams', 'in', 'the', 'UNK', 'final', 'had', 'to', 'play', 'away', ',', 'so', 'although', 'both', 'NNS']
+0.0005532971587924535
+
+sentences_with_highest_losses.csv
+['these', 'three', 'sources']
+0.0001483734099531947
+['i', 'would', 'hope', 'that', 'my', 'UNK', 'in', 'UNK', 'a', 'more', 'UNK', 'article']
+6.478515868307561
+['UNK', 'also', 'UNK', 'to', 'UNK', 'that', 'her', 'UNK', 'was', 'not', 'given', 'to', 'her', 'simply', 'because', 'her', 'parents']
+6.087303270011077
+['UNK', ',', "''", 'he', 'wrote', 'in', 'the', 'UNK', 'UNK', 'of', 'a', 'new', 'model', 'at', 'sea', ',', '``', 'must', 'come', 'in', 'and', 'are', 'to', 'be', 'made', 'a', 'part', 'of', 'the', 'matter', 'of', 'which', 'we', 'are', 'to', 'UNK', ';', 'positive', 'decisions']
+5.594644422385572
+['perhaps', 'we', 'should', 'explain', 'to', 'the', 'user', 'why', 'the', 'UNK']
+5.579463065209795
+['although', 'current', 'material', 'costs']
+4.678833386365111
+['due', 'to', 'this', 'fact', ',', 'the', 'UNK']
+4.312288633163647
+['i', 'would', 'first', 'assume', 'that', 'the', 'mass', 'of', 'the', 'ocean', 'is', 'JJ', 'compared', 'to', 'the', 'mass', 'of', 'the', 'planet', ';', 'and', 'then', 'i', 'would', 'assume', 'that', 'sea', 'level']
+4.291042402428972
+['UNK', 'versions', 'UNK', 'in', 'a', 'sequence', '(', 'NNP']
+4.264719967291401
+['JJ', 'NN', 'NNP', 'says', 'that', 'the', 'membership', 'numbers', 'UNK', 'by', 'la', 'NNP', 'UNK', 'NNP']
+4.066799189287954
+
+sentences_with_highest_accuracy.csv
+['NNP', ',', 'a', 'UNK', 'chinese', 'UNK', 'who', 'holds', 'the', 'secret', 'to', 'UNK', 'UNK', 'and', 'his', 'army', 'of', 'NN', ',', 'JJ', 'UNK', 'reveals', 'to', 'UNK', 'that', 'the', 'only', 'way', 'to', 'stop', 'the', 'UNK', 'UNK']
+False
+['the', 'pair']
+True
+['because', 'of', 'NN', 'of', 'NNP', ',', 'the', 'subject']
+True
+['the', 'town']
+True
+['the', 'NNS']
+True
+['this', 'website']
+True
+['the', 'UNK', 'hits', 'them', 'one', 'by', 'one', ',', 'and', 'a', 'light', 'NN']
+True
+['some', 'NN', 'trains']
+True
+['a', 'NN', 'is', 'VBN', 'by', 'the', 'entire', 'NN', 'space', ',', 'and', 'so', 'these', 'structures']
+True
+['it', 'is', 'UNK', 'through', 'their', 'former', 'UNK', ',', 'political', 'NNS', 'and', 'business', 'relationships', ',', 'the', 'group']
+True
+
+sentences_with_lowest_accuracy.csv
+['NNP', ',', 'a', 'UNK', 'chinese', 'UNK', 'who', 'holds', 'the', 'secret', 'to', 'UNK', 'UNK', 'and', 'his', 'army', 'of', 'NN', ',', 'JJ', 'UNK', 'reveals', 'to', 'UNK', 'that', 'the', 'only', 'way', 'to', 'stop', 'the', 'UNK', 'UNK']
+False
+['the', 'remaining', 'UNK', 'will', 'be', 'added', 'to', 'the', 'digital', 'collection', 'as', 'UNK']
+False
+['however', ',', 'previous', 'UNK', 'UNK']
+False
+['UNK', 'UNK', ',', 'if', 'you', 'have', 'good', 'reason', 'to', 'believe', 'the', 'person', 'with', 'the', 'UNK']
+False
+['NNP', "''", ';', 'the', 'women']
+False
+['one', 'argument', 'is', 'that', 'UNK']
+False
+['a', 'system', 'VBG', 'on', 'security', 'through', 'NN', 'may', 'have', 'actual', 'security', 'NNS', ',', 'but', 'its', 'UNK', 'or', 'UNK', 'UNK']
+False
+['JJ', 'NN', 'UNK']
+False
+['UNK', 'in', 'this', 'township']
+False
+['given', 'that', 'all', 'the', 'discussion', 'on', 'the', 'page', 'to', 'date', '(', 'most', 'of', 'which']
+False
+
+##########################################################################################
+LOOKBACK: 30
+
+sentences_with_lowest_losses.csv
+['such', 'problems', 'include', 'UNK', 'that', 'the', 'research', 'required', 'to', 'identify', 'the', 'UNK', 'NNP', "'", 'practice', 'for', 'any', 'policy', 'problem']
+5.123601573725107e-05
+['these', 'three', 'sources']
+6.31782616167987e-05
+['NNS', 'that', 'may', 'cause', 'NNS']
+7.883744451456794e-05
+['from', 'the', 'comment', 'above', ',', 'regardless', 'how', 'everyone', 'UNK', 'that', ',', 'i', 'must', 'state', 'that', 'this', 'user']
+0.00011066280371564977
+['fair', 'use', 'in', '3', 'ring', 'NNP', 'this', 'image']
+0.00013124854687847346
+['instead', ',', 'the', 'top', 'five', 'teams', 'in', 'each', 'conference', 'will', 'UNK', 'for', 'the', 'UNK', 'and', 'the', 'two', 'conference', 'NNS']
+0.00019320378802551954
+['those', 'two', 'lines']
+0.0003164495233858658
+['although', 'these', 'sources']
+0.00031895820032702883
+['the', 'UNK', ',', 'most', 'comprehensive', 'and', 'UNK', 'articles', 'often']
+0.0003258773238019914
+['if', 'not', 'blocked', ',', 'this', 'user']
+0.00039578051321613813
+
+sentences_with_highest_losses.csv
+['such', 'problems', 'include', 'UNK', 'that', 'the', 'research', 'required', 'to', 'identify', 'the', 'UNK', 'NNP', "'", 'practice', 'for', 'any', 'policy', 'problem']
+5.123601573725107e-05
+['i', 'would', 'hope', 'that', 'my', 'UNK', 'in', 'UNK', 'a', 'more', 'UNK', 'article']
+8.05240419394294
+['the', 'main', 'UNK', 'that', 'vary', 'from', 'engine', 'to', 'engine']
+6.1772127275074835
+['due', 'to', 'this', 'fact', ',', 'the', 'UNK']
+5.858546373394978
+['due', 'to', 'the', 'hard', 'NN', 'of', 'UNK', 'NN', ',', 'the', 'UNK', 'of', 'this', 'trail']
+5.61057239388048
+['king', 'NNP', '(', 'CD', 'UNK', ')', ',', 'the', 'most', 'UNK', 'of', 'these', 'UNK', ',', 'wrote', 'the', 'NNP', 'NNP', ',', 'a', 'comprehensive', 'UNK', 'which', 'UNK', 'NNP', 'UNK', 'still']
+4.912447511320202
+['UNK', ',', 'although', 'NNP', 'UNK', 'had', 'the', 'UNK', 'of', 'VBG', 'the', 'NNP', ',', 'it', 'has', 'the', 'problem', 'that', 'the', 'UNK']
+4.2879929221523145
+['in', 'an', 'ever', 'more', 'connected', 'world', ',', 'foreign', 'policy', 'factors']
+4.28755353764607
+['to', 'this', 'day', ',', 'some', 'JJ', 'NNS', 'such', 'as', 'the', '(', 'JJ', ')', 'NNP', 'NNP', ',']
+4.2076026905611235
+['stations', 'for', 'the', 'UNK', 'from', 'date', 'of', 'UNK', 'until', 'UNK', 'and', 'a', 'UNK', 'station']
+4.148780694075699
+
+sentences_with_highest_accuracy.csv
+['for', 'the', 'example', 'of', 'NNP', 'NN', ',', 'the', 'NN', 'UNK']
+False
+['the', 'pair']
+True
+['the', 'UNK', 'of', 'the', 'JJ', 'UNK', 'NNP', 'in', 'e', 'minor']
+True
+['i', 'UNK', 'that', 'many', 'editors', 'of', 'some', 'articles']
+True
+['the', 'map']
+True
+['the', 'JJ', 'UNK', 'of', 'NN', 'to', 'NN']
+True
+['because', 'of', 'NN', 'of', 'NNP', ',', 'the', 'subject']
+True
+['a', 'VBN', 'NNP', 'message', 'in', 'october', 'UNK']
+True
+['the', 'NNP', 'NNP', 'incident']
+True
+['this', 'name']
+True
+
+sentences_with_lowest_accuracy.csv
+['for', 'the', 'example', 'of', 'NNP', 'NN', ',', 'the', 'NN', 'UNK']
+False
+['one', 'argument', 'is', 'that', 'UNK']
+False
+['john', 'UNK', 'NN', ',', 'too', ',', 'can', 'be', 'UNK', 'using', 'NNS', ',', 'if', 'the', 'means', 'of', 'UNK', 'the', 'relationships', 'between', 'different', 'NN', 'values']
+False
+['their', 'JJ', 'review']
+False
+['to', 'the', 'NN', ',', 'it', 'is', 'a', 'game', 'to', 'be', 'won', ',', 'while', 'the', 'JJ', 'UNK', 'UNK']
+False
+['to', 'this', 'day', ',', 'some', 'JJ', 'NNS', 'such', 'as', 'the', '(', 'JJ', ')', 'NNP', 'NNP', ',']
+False
+['the', 'national', 'capital', ',', 'NNP', ',', 'is', 'an', 'JJ', ',', 'JJ', 'former', 'UNK', 'UNK', 'NN', 'where', 'JJ', 'UNK', 'UNK']
+False
+['UNK', "'s", 'UNK']
+False
+['typical', 'NN', 'methods']
+False
+['NNP', "'s", 'UNK', 'and', 'NN']
+False
