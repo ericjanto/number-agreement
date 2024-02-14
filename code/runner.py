@@ -316,6 +316,7 @@ class Runner(object):
         batch_size=100,
         min_change=0.0001,
         log=True,
+        save_loss_acc_file = None
     ):
         """
         train the model on some training set X, D while optimizing the loss on a dev set X_dev, D_dev
@@ -457,6 +458,11 @@ class Runner(object):
                 best_acc = acc
                 self.model.save_params()
                 best_epoch = epoch
+
+            if save_loss_acc_file!=None:
+                with open(save_loss_acc_file, "a") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([epoch, loss, acc])
 
             # make sure we change the RNN enough
             if abs(prev_loss - loss) < min_change:
@@ -1229,7 +1235,7 @@ if __name__ == "__main__":
             rnn.V = np.load(os.path.join(dir_rnn, f"rnn_np_lb_{lookback}.V.npy"))
             rnn.W = np.load(os.path.join(dir_rnn, f"rnn_np_lb_{lookback}.W.npy"))
 
-            
+
             # mean np loss
             mean_loss = sum([runner_rnn.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
             results.append(
@@ -1387,3 +1393,83 @@ if __name__ == "__main__":
             log=log,
         )
 
+    if mode == "question-5":
+        train_size = 10000
+        dev_size = 1000
+        vocab_size = 2000
+        epochs = 10
+        log = True
+        batch_size = 100
+        min_change = 0.0001
+        lookback = 10
+
+        hdim = 50
+        lr = 0.5
+
+        anneal_values = [0.1,0.5,1,2,4,8,16,32]
+
+        # get the data set vocabulary
+        vocab = pd.read_table(
+            data_folder + "/vocab.wiki.txt",
+            header=None,
+            sep="\s+",
+            index_col=0,
+            names=["count", "freq"],
+        )
+        num_to_word = dict(enumerate(vocab.index[:vocab_size]))
+        word_to_num = invert_dict(num_to_word)
+
+        # calculate loss vocabulary words due to vocab_size
+        fraction_lost = fraq_loss(vocab, word_to_num, vocab_size)
+        print(
+            "Retained %d words from %d (%.02f%% of all tokens)\n"
+            % (vocab_size, len(vocab), 100 * (1 - fraction_lost))
+        )
+
+        # load training data
+        sents = load_np_dataset(data_folder + "/wiki-train.txt")
+        S_train = docs_to_indices(sents, word_to_num, 0, 0)
+        X_train, D_train = seqs_to_npXY(S_train)
+
+        X_train = X_train[:train_size]
+        Y_train = D_train[:train_size]
+
+        # load development data
+        sents = load_np_dataset(data_folder + "/wiki-dev.txt")
+        S_dev = docs_to_indices(sents, word_to_num, 0, 0)
+        X_dev, D_dev = seqs_to_npXY(S_dev)
+
+        X_dev = X_dev[:dev_size]
+        D_dev = D_dev[:dev_size]
+
+        for anneal in anneal_values:
+            acc = 0.0
+
+            rnn = RNN(vocab_size, hdim, 2)
+            runner = Runner(rnn)
+            rnn_loss = runner.train_np(
+                X_train,
+                Y_train,
+                X_dev,
+                D_dev,
+                epochs=epochs,
+                learning_rate=lr,
+                anneal=anneal,
+                back_steps=lookback,
+                batch_size=batch_size,
+                min_change=min_change,
+                log=log,
+                save_loss_acc_loss="question_5_loss_acc.csv"
+            )
+
+            dir = "matrices/question5"
+
+            np.save(os.path.join(dir, f"rnn_np_anneal_{lookback}.U.npy"), rnn.U)
+            np.save(os.path.join(dir, f"rnn_np_anneal_{lookback}.V.npy"), rnn.V)
+            np.save(os.path.join(dir, f"rnn_np_anneal_{lookback}.W.npy"), rnn.W)
+
+            acc = sum(
+                [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
+            ) / len(X_dev)
+
+            print(f"Accuracy {hdim}: %.03f" % acc)
