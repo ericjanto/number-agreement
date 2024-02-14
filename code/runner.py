@@ -1203,9 +1203,7 @@ if __name__ == "__main__":
         q = vocab.freq[vocab_size] / sum(vocab.freq[vocab_size:])
 
         results_header = [
-            "loss_np",
-            "unadjusted_perplexity",
-            "adjusted_perplexity",
+            "mean_loss_np",
             "model",
             "lookback",
         ]
@@ -1221,8 +1219,8 @@ if __name__ == "__main__":
         dir_gru = "matrices/question4/gru"
 
         sents = load_np_dataset(data_folder + "/wiki-test.txt")
-        S_test = docs_to_indices(sents, word_to_num, 0, 0)
-        X_test, D_test = seqs_to_npXY(S_test)
+        S_dev = docs_to_indices(sents, word_to_num, 0, 0)
+        X_dev, D_dev = seqs_to_npXY(S_dev)
 
         for lookback in [1, 3, 5, 10, 20, 30]:
             # RNN:
@@ -1231,15 +1229,12 @@ if __name__ == "__main__":
             rnn.V = np.load(os.path.join(dir_rnn, f"rnn_np_lb_{lookback}.V.npy"))
             rnn.W = np.load(os.path.join(dir_rnn, f"rnn_np_lb_{lookback}.W.npy"))
 
-            # Evaluate on test set
-            test_loss = runner_rnn.compute_loss_np(X_test, D_test)
-            adjusted_test_loss = adjust_loss(test_loss, fraction_lost, q)
-
+            
+            # mean np loss
+            mean_loss = sum([runner_rnn.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
             results.append(
                 [
-                    test_loss,
-                    np.exp(test_loss),
-                    np.exp(adjusted_test_loss),
+                    mean_loss,
                     "rnn",
                     lookback,
                 ]
@@ -1256,18 +1251,19 @@ if __name__ == "__main__":
             gru.W = np.load(os.path.join(dir_gru, f"gru_np_lb_{lookback}.W.npy"))
 
             # Evaluate on test set
-            text_loss = runner_gru.compute_loss_np(X_test, D_test)
-            adjusted_test_loss = adjust_loss(test_loss, fraction_lost, q)
-
+            mean_loss = sum([runner_gru.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
             results.append(
                 [
-                    test_loss,
-                    np.exp(test_loss),
-                    np.exp(adjusted_test_loss),
+                    mean_loss,
                     "gru",
                     lookback,
                 ]
             )
+
+        with open("results-q4.csv", "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(results_header)
+            writer.writerows(results)
 
     # get the data set vocabulary
     if mode == "get_sentences":
