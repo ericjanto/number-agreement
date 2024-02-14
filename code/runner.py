@@ -1203,7 +1203,7 @@ if __name__ == "__main__":
         q = vocab.freq[vocab_size] / sum(vocab.freq[vocab_size:])
 
         results_header = [
-            "mean_loss",
+            "loss_np",
             "unadjusted_perplexity",
             "adjusted_perplexity",
             "model",
@@ -1220,6 +1220,10 @@ if __name__ == "__main__":
         dir_rnn = "matrices/question4/rnn"
         dir_gru = "matrices/question4/gru"
 
+        sents = load_np_dataset(data_folder + "/wiki-test.txt")
+        S_test = docs_to_indices(sents, word_to_num, 0, 0)
+        X_test, D_test = seqs_to_npXY(S_test)
+
         for lookback in [1, 3, 5, 10, 20, 30]:
             # RNN:
             # Load parameters
@@ -1228,11 +1232,7 @@ if __name__ == "__main__":
             rnn.W = np.load(os.path.join(dir_rnn, f"rnn_np_lb_{lookback}.W.npy"))
 
             # Evaluate on test set
-            docs = load_lm_dataset(data_folder + "/wiki-test.txt")
-            S_test = docs_to_indices(docs, word_to_num, 1, 1)
-            X_test, D_test = seqs_to_lmXY(S_test)
-
-            test_loss = runner_rnn.compute_mean_loss(X_test, D_test)
+            test_loss = runner_rnn.compute_loss_np(X_test, D_test)
             adjusted_test_loss = adjust_loss(test_loss, fraction_lost, q)
 
             results.append(
@@ -1256,7 +1256,7 @@ if __name__ == "__main__":
             gru.W = np.load(os.path.join(dir_gru, f"gru_np_lb_{lookback}.W.npy"))
 
             # Evaluate on test set
-            text_loss = runner_gru.compute_mean_loss(X_test, D_test)
+            text_loss = runner_gru.compute_loss_np(X_test, D_test)
             adjusted_test_loss = adjust_loss(test_loss, fraction_lost, q)
 
             results.append(
