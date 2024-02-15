@@ -1483,3 +1483,73 @@ if __name__ == "__main__":
             ) / len(X_dev)
 
             print(f"Accuracy {hdim}: %.03f" % acc)
+
+    if mode == "evaluate-q5":
+        vocab_size = 2000
+        hdim = 50
+
+
+        vocab = pd.read_table(
+            data_folder + "/vocab.wiki.txt",
+            header=None,
+            sep="\s+",
+            index_col=0,
+            names=["count", "freq"],
+        )
+
+
+        num_to_word = dict(enumerate(vocab.index[:vocab_size]))
+        word_to_num = invert_dict(num_to_word)
+
+        # calculate loss vocabulary words due to vocab_size
+        fraction_lost = fraq_loss(vocab, word_to_num, vocab_size)
+        print(
+            "Retained %d words from %d (%.02f%% of all tokens)\n"
+            % (vocab_size, len(vocab), 100 * (1 - fraction_lost))
+        )
+
+        # q = best unigram frequency from omitted vocab
+        # this is the best expected loss out of that set
+        q = vocab.freq[vocab_size] / sum(vocab.freq[vocab_size:])
+
+        # Evaluate for anneal values 2 and 4.
+        # Evaluation loads the corresponding matrices and computes the accuracy and loss on the test set.
+        results_header = [
+            "mean_loss_np",
+            "accuracy",
+            "model",
+            "anneal",
+        ]
+        results = []
+
+        rnn = RNN(vocab_size, hdim, 2)
+        runner_rnn = Runner(rnn)
+
+        dir_rnn = "matrices/question5"
+
+        sents = load_np_dataset(data_folder + "/wiki-test.txt")
+        S_test = docs_to_indices(sents, word_to_num, 0, 0)
+        X_test, D_test = seqs_to_npXY(S_test)
+
+        for anneal_val in [2,4]:
+            rnn.U = np.load(os.path.join(dir_rnn, f"rnn_np_anneal_{anneal_val}.U.npy"))
+            rnn.V = np.load(os.path.join(dir_rnn, f"rnn_np_anneal_{anneal_val}.V.npy"))
+            rnn.W = np.load(os.path.join(dir_rnn, f"rnn_np_anneal_{anneal_val}.W.npy"))
+
+
+            # mean np loss
+            mean_loss = sum([runner_rnn.compute_loss_np(X_test[i], D_test[i]) for i in range(len(X_test))]) / len(X_test)
+            accuracy = sum([runner_rnn.compute_acc_np(X_test[i], D_test[i]) for i in range(len(X_test))]) / len(X_test)
+            results.append(
+                [
+                    mean_loss,
+                    accuracy,
+                    "rnn",
+                    anneal_val,
+                ]
+            )
+
+        with open("results-q5.csv", "w") as f:
+            writer = csv.writer(f)
+            writer.writerow(results_header)
+            writer.writerows(results)
