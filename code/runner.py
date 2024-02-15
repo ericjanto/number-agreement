@@ -1409,7 +1409,6 @@ if __name__ == "__main__":
         hdim = 50
         lr = 0.5
 
-        anneal_values = [0.1,0.5,1,2,4,8,16,32]
 
         # get the data set vocabulary
         vocab = pd.read_table(
@@ -1475,9 +1474,9 @@ if __name__ == "__main__":
 
             dir = "matrices/question5"
 
-            np.save(os.path.join(dir, f"rnn_np_anneal_{lookback}.U.npy"), rnn.U)
-            np.save(os.path.join(dir, f"rnn_np_anneal_{lookback}.V.npy"), rnn.V)
-            np.save(os.path.join(dir, f"rnn_np_anneal_{lookback}.W.npy"), rnn.W)
+            np.save(os.path.join(dir, f"rnn_np_anneal_{anneal}.U.npy"), rnn.U)
+            np.save(os.path.join(dir, f"rnn_np_anneal_{anneal}.V.npy"), rnn.V)
+            np.save(os.path.join(dir, f"rnn_np_anneal_{anneal}.W.npy"), rnn.W)
 
             acc = sum(
                 [runner.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]
