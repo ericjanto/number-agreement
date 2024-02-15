@@ -1,0 +1,25 @@
+Model RNN
+Hidden units: 10
+best observed loss was 0.4993727950665032, acc 0.744, at epoch 9
+Epoch 10: loss: 0.5111967670098961    acc: 0.737
+
+Hidden units: 25
+best observed loss was 0.4769848529573269, acc 0.772, at epoch 10
+Epoch 10: loss: 0.4769848529573269    acc: 0.772
+
+Hidden units: 50
+best observed loss was 0.47490056036711226, acc 0.785, at epoch 10
+Epoch 10: loss: 0.47490056036711226   acc: 0.785
+
+Model GRU
+Hidden units: 10
+best observed loss was 0.41488045231773873, acc 0.813, at epoch 10
+Epoch 10: loss: 0.41488045231773873   acc: 0.813
+
+Hidden units: 25
+best observed loss was 0.4397074211420229, acc 0.806, at epoch 10
+Epoch 10: loss: 0.4397074211420229    acc: 0.806
+
+Hidden units: 50
+best observed loss was 0.41875652754617093, acc 0.815, at epoch 10
+Epoch 10: loss: 0.41875652754617093   acc: 0.815

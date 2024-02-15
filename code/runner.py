@@ -1259,7 +1259,7 @@ if __name__ == "__main__":
 
             # Evaluate on test set
             mean_loss = sum([runner_gru.compute_loss_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
-            accuracy = sum([runner_rnn.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
+            accuracy = sum([runner_gru.compute_acc_np(X_dev[i], D_dev[i]) for i in range(len(X_dev))]) / len(X_dev)
             results.append(
                 [
                     mean_loss,

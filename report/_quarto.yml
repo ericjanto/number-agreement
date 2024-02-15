@@ -4,7 +4,7 @@ project:
     - index.qmd
 
 author:
-  - name: "<Samuel's exam number>"
+  - name: "B150821"
   - name: "B161564"
 
 format:
